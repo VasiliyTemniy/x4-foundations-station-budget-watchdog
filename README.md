@@ -48,7 +48,7 @@ station-name tags and their target budgets, and to tune the watchdog:
 
 | Slider | Default | Meaning |
 | --- | --- | --- |
-| Check interval | 10 s | How often all stations are checked. |
+| Check interval | 30 s | How often all stations are checked. |
 | Minimum transfer | 1 M Cr | Floor for any single grant or drain. |
 | Minimum kept player money | 20 M Cr | Wallet reserve top-ups never dip into. |
 | Top-up fill level | 200 % | Balance a grant fills up to, in percent of target. |
