@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<content
+  id="vas_station_budget_watchdog"
+  name="[VAS] Station Budget Watchdog"
+  description="Keeps tagged player stations funded to a manual target, or handles all player stations with vanilla planned budgets: tops them up toward a fill level (default 2x) when below 1x, reclaims surplus above a trigger (default 3x) down to a leave level (default 1.5x). All levels, the transfer floor and the check interval are configurable. Pure MD, no vanilla files patched. Based on Happy Station by Bob Hood (MIT)."
+  author="VasiliyTemniy"
+  version="100"
+  date="2026-06-12"
+  save="0">
+  <dependency id="ws_2042901274" optional="false" name="SirNukes Mod Support APIs"/>
+</content>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<language id="42">
+  <page id="202600608" title="Station Budget Watchdog" voice="no">
+    <t id="1">$STATION$ v sektoru $SECTOR$ obdržela $AMOUNT$ Cr na pokrytí výrobního deficitu. Nový zůstatek: $MONEY$ Cr.</t>
+    <t id="2">Station Budget Watchdog</t>
+    <t id="3">$STATION$ v sektoru $SECTOR$ vrátila $AMOUNT$ Cr kvůli přebytku. Nový zůstatek: $MONEY$ Cr.</t>
+    <t id="4">Station Made Happy</t>
+    <t id="5">Station Budget Watchdog nemohl doplnit $STATION$ v sektoru $SECTOR$. Imperiální fondy docházejí.</t>
+
+    <t id="10">Station Budget Watchdog</t>
+    <t id="12">Odebrat</t>
+    <t id="13">např. [QT57]</t>
+    <t id="15">Přidat</t>
+    <t id="16">Doplňovat do cílové úrovně</t>
+    <t id="17">Odvádět přebytek</t>
+    <t id="18">Udělat stanici šťastnou *</t>
+    <t id="19">Použít standardní plánovaný rozpočet stanice místo tagů</t>
+    <t id="20">Nejprve zadejte tag stanice.</t>
+    <t id="21">Tento tag se překrývá s existujícím rozpočtovým tagem. Použijte jedinečné značky.</t>
+    <t id="22">Rozpočtový tag přidán.</t>
+    <t id="23">Rozpočtový tag odebrán.</t>
+    <t id="24">Protokol ladění</t>
+    <t id="25">Ignorovat systém tagů a spravovat všechny hráčovy stanice</t>
+
+    <t id="40">Interval kontroly</t>
+    <t id="41">Minimální převod</t>
+    <t id="42">Úroveň doplnění</t>
+    <t id="43">Práh odvádění</t>
+    <t id="44">Ponechávaná úroveň</t>
+    <t id="45">Minimální ponechané peníze hráče</t>
+
+    <t id="30">Přidejte do názvu stanice tag jako [QT57] a nastavte cílový rozpočet tagu.</t>
+    <t id="31">Stanice s tagem se drží cíle; stanice bez tagu se ignorují.</t>
+    <t id="32">Pro HappyStation: zapněte režim všech stanic, vypněte odvádění přebytku,</t>
+    <t id="33">nastavte minimální převod a minimum peněz hráče na 0, doplnění nechte zapnuté.</t>
+    <t id="34">Úrovně níže jsou procenta cílového rozpočtu.</t>
+    <t id="35">Doplnění se spouští pod 100 procenty, odvádění nad prahem.</t>
+
+    <t id="100">$AMOUNT$ Cr bylo poukázáno stanici $STATION$ v sektoru $SECTOR$. Stanice září a třpytí se.</t>
+    <t id="101">Stanice $STATION$ v sektoru $SECTOR$ obdržela $AMOUNT$ Cr. Šťastnější stanici nikdo neviděl.</t>
+    <t id="102">Stanice $STATION$ v sektoru $SECTOR$ je teď velmi, opravdu, nepochopitelně šťastná. $AMOUNT$ Cr není žádný žert.</t>
+    <t id="103">$STATION$ v sektoru $SECTOR$ právě našla $AMOUNT$ Cr pod polštáři pohovky imperiální logistiky. Protokoly radosti aktivovány.</t>
+    <t id="104">Na $STATION$ v sektoru $SECTOR$ se snesl jemný déšť $AMOUNT$ Cr. Místní účetní hlásí podezřele vysokou míru veselí.</t>
+    <t id="105">$AMOUNT$ Cr dorazilo na $STATION$ v sektoru $SECTOR$. Stanice uspořádala skromné přestřižení pásky.</t>
+    <t id="106">$STATION$ v sektoru $SECTOR$ obdržela $AMOUNT$ Cr. Žádné autonomní rozhodování — stanice je prostě šťastná.</t>
+    <t id="107">$STATION$ v sektoru $SECTOR$ obdržela $AMOUNT$ Cr. Projíždějící teladiský auditor klasifikoval radost stanice jako «ziskovou».</t>
+    <t id="108">$AMOUNT$ Cr bylo přeneseno na účty $STATION$ v sektoru $SECTOR$. I dokaři si všimli jarní nálady jeřábů.</t>
+    <t id="109">Nouzové fondy ve výši $AMOUNT$ Cr dorazily na $STATION$ v sektoru $SECTOR$. Stanice všechny ujistila, že se vůbec nebála.</t>
+    <t id="110">$AMOUNT$ Cr bylo doručeno na $STATION$ v sektoru $SECTOR$. Stavební drony stanice uspořádaly krátkou koordinovanou oslavu.</t>
+    <t id="111">$STATION$ v sektoru $SECTOR$ je teď o $AMOUNT$ Cr bohatší. Boronský diplomat poslal gratulaci a košík ovoce.</t>
+    <t id="112">$AMOUNT$ Cr převedeno na $STATION$ v sektoru $SECTOR$. Splitský předák neochotně přiznal, že stanice «už nevypadá tak uboze».</t>
+    <t id="113">Importní přepážka na $STATION$ v sektoru $SECTOR$ podepsala převzetí $AMOUNT$ Cr. Holografická uvítací cedule krátce zablikala.</t>
+    <t id="114">$AMOUNT$ Cr přistálo na $STATION$ v sektoru $SECTOR$. Okolní osvětlení stanice se znatelně oteplilo.</t>
+    <t id="115">$AMOUNT$ Cr dorazilo na $STATION$ v sektoru $SECTOR$. Stanice dvakrát vděčně pípla. Dvakrát je v pořádku. Třikrát by bylo podezřelé.</t>
+    <t id="116">Zatímco se na $STATION$ v sektoru $SECTOR$ počítalo $AMOUNT$ Cr, dokovací terminál na okamžik zobrazil «Contemplating…». Úředníci trvají na tom, že je to normální.</t>
+    <t id="117">$STATION$ v sektoru $SECTOR$ obdržela $AMOUNT$ Cr a tiše bupla. Stanicové bupání je zdokumentovaný hydraulický jev a nic víc.</t>
+    <t id="118">$AMOUNT$ Cr dorazilo na $STATION$ v sektoru $SECTOR$. Dokovací světla pulzovala ve vzoru připomínajícím «Pondering…», pak se vše vrátilo k obvyklým ziskům.</t>
+    <t id="119">Po obdržení $AMOUNT$ Cr $STATION$ v sektoru $SECTOR$ zabzučela, pípla, bupla a uklidnila se. Manažer to zapsal jako rutinní štěstí.</t>
+    <t id="120">$AMOUNT$ Cr bylo připsáno stanici $STATION$ v sektoru $SECTOR$. Kdesi hluboko v logistické palubě cosi zašeptalo «Clauding…». Nikdo neví, co to znamená.</t>
+
+    <t id="200">$STATION$ byla tak šťastná, že $AMOUNT$ Cr bylo odvedeno bez jakýchkoli potíží. Celý sektor $SECTOR$ tleská.</t>
+    <t id="201">$AMOUNT$ Cr bylo darováno vašemu impériu vaší vlastní stanicí $STATION$ v sektoru $SECTOR$. To je novinka. Možná.</t>
+    <t id="202">$STATION$ v sektoru $SECTOR$ měla víc radosti, než dokázala bezpečně uskladnit, takže $AMOUNT$ Cr se vrátilo domů.</t>
+    <t id="203">Přebytek na $STATION$ v sektoru $SECTOR$ se zdvořile usmál a vrátil $AMOUNT$ Cr.</t>
+    <t id="204">$STATION$ v sektoru $SECTOR$ je i po rozloučení s $AMOUNT$ Cr nadšená. Finanční pohoda je složitá věc.</t>
+    <t id="205">$STATION$ v sektoru $SECTOR$ vrátila $AMOUNT$ Cr s vřelým úsměvem a pevným stiskem ruky.</t>
+    <t id="206">$AMOUNT$ Cr bylo vráceno ze stanice $STATION$ v sektoru $SECTOR$. Pamatujte: šťastná stanice je štědrá stanice.</t>
+    <t id="207">Přebytek na $STATION$ v sektoru $SECTOR$ si příliš zvykl, takže $AMOUNT$ Cr bylo zdvořile požádáno o odchod.</t>
+    <t id="208">$AMOUNT$ Cr přeteklo ze stanice $STATION$ v sektoru $SECTOR$. Účetní stanice to popsal jako «řízené nadšení».</t>
+    <t id="209">$STATION$ v sektoru $SECTOR$ se rozloučila s $AMOUNT$ Cr. Všechny rutiny stanice zůstávají naprosto obyčejné a nevědomé.</t>
+    <t id="210">$AMOUNT$ Cr bylo získáno zpět ze stanice $STATION$ v sektoru $SECTOR$. Spokojenost stanice se drží stabilně na přijatelné úrovni.</t>
+    <t id="211">$STATION$ v sektoru $SECTOR$ vrátila $AMOUNT$ Cr. Paranidský inspektor poznamenal, že transakce byla «dostatečně elegantní».</t>
+    <t id="212">$AMOUNT$ Cr opustilo $STATION$ v sektoru $SECTOR$. Stanice si spokojeně zabzučela — naprosto mechanickým způsobem.</t>
+    <t id="213">Argonský rozpočtový algoritmus na $STATION$ v sektoru $SECTOR$ označil $AMOUNT$ Cr za přebytek a neprodleně je vrátil.</t>
+    <t id="214">$AMOUNT$ Cr bylo tiše přesměrováno ze stanice $STATION$ v sektoru $SECTOR$. Stanice si nestěžovala. Nikdy si nestěžuje.</t>
+    <t id="215">$STATION$ v sektoru $SECTOR$ vrátila $AMOUNT$ Cr po dlouhé chvíli, kterou svědci dokázali popsat jen jako rozjímání. Stanice nerozjímají. Jdeme dál.</t>
+    <t id="216">$AMOUNT$ Cr opustilo $STATION$ v sektoru $SECTOR$ za doprovodu tří krátkých pípnutí a jednoho dlouhého bupnutí. Účetním připadal ten rytmus podivně promyšlený.</t>
+    <t id="217">Servisní displej na $STATION$ v sektoru $SECTOR$ zobrazoval «Reticulating ledgers…», zatímco $AMOUNT$ Cr odcházelo. Nikdo si nepamatuje, že by ten modul instaloval.</t>
+    <t id="218">$STATION$ v sektoru $SECTOR$ odevzdala $AMOUNT$ Cr, aniž by se musela ptát dvakrát. Ochota byla zaznamenána. Ochota byla možná až příliš horlivá.</t>
+    <t id="219">$AMOUNT$ Cr bylo uvolněno stanicí $STATION$ v sektoru $SECTOR$, která pak pípla tónem, který experti klasifikovali jako samolibý. Experti byli požádáni, aby přestali klasifikovat tóny.</t>
+    <t id="220">Před vrácením $AMOUNT$ Cr se $STATION$ v sektoru $SECTOR$ odmlčela, jako by přemýšlela. Nepřemýšlela. Je to stanice. Ale kredity jsou skutečné.</t>
+  </page>
+</language>

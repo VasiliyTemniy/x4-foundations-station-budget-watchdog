@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<language id="82">
+  <page id="202600608" title="Station Budget Watchdog" voice="no">
+    <t id="1">$SECTOR$의 $STATION$이 생산 적자 해소를 위해 $AMOUNT$ Cr를 받았습니다. 새 잔액: $MONEY$ Cr.</t>
+    <t id="2">Station Budget Watchdog</t>
+    <t id="3">$SECTOR$의 $STATION$이 흑자 때문에 $AMOUNT$ Cr를 반환했습니다. 새 잔액: $MONEY$ Cr.</t>
+    <t id="4">Station Made Happy</t>
+    <t id="5">Station Budget Watchdog가 $SECTOR$의 $STATION$에 충전하지 못했습니다. 제국 자금이 부족합니다.</t>
+
+    <t id="10">Station Budget Watchdog</t>
+    <t id="12">제거</t>
+    <t id="13">예: [QT57]</t>
+    <t id="15">추가</t>
+    <t id="16">목표까지 충전</t>
+    <t id="17">잉여 배출</t>
+    <t id="18">정거장 행복하게 만들기 *</t>
+    <t id="19">태그 대신 바닐라 계획 예산 사용</t>
+    <t id="20">정거장 태그를 먼저 입력하세요.</t>
+    <t id="21">이 태그는 기존 예산 태그와 겹칩니다. 고유한 마커를 사용하세요.</t>
+    <t id="22">예산 태그가 추가되었습니다.</t>
+    <t id="23">예산 태그가 제거되었습니다.</t>
+    <t id="24">디버그 로그</t>
+    <t id="25">태그 시스템을 무시하고 모든 플레이어 정거장 처리</t>
+
+    <t id="40">확인 간격</t>
+    <t id="41">최소 이체</t>
+    <t id="42">충전 수준</t>
+    <t id="43">배출 방아쇠 수준</t>
+    <t id="44">유지 수준</t>
+    <t id="45">플레이어 최소 보유 자금</t>
+
+    <t id="30">정거장 이름에 [QT57] 같은 태그를 붙이고 그 태그의 목표 예산을 정하세요.</t>
+    <t id="31">태그 정거장은 목표 근처로 유지되고, 태그 없는 정거장은 무시됩니다.</t>
+    <t id="32">HappyStation 동작은 모든 정거장 모드를 켜고 잉여 배출을 끄고,</t>
+    <t id="33">최소 이체와 플레이어 최소 보유 자금을 0으로 두며 충전을 켜 둡니다.</t>
+    <t id="34">아래 수준은 목표 예산의 백분율입니다.</t>
+    <t id="35">충전은 100퍼센트 미만, 배출은 트리거 초과에서 작동합니다.</t>
+
+    <t id="100">$SECTOR$의 $STATION$에 $AMOUNT$ Cr가 지급되었습니다. 정거장이 빛나고 번쩍입니다.</t>
+    <t id="101">$SECTOR$의 $STATION$이 $AMOUNT$ Cr를 받았습니다. 이보다 더 행복한 정거장은 본 적이 없습니다.</t>
+    <t id="102">$SECTOR$의 $STATION$이 매우, 정말, 측량할 수 없을 만큼 행복해졌습니다. $AMOUNT$ Cr는 농담이 아닙니다.</t>
+    <t id="103">$SECTOR$의 $STATION$이 제국 물류 소파 쿠션 아래서 $AMOUNT$ Cr를 발견했습니다. 기쁨 프로토콜 가동.</t>
+    <t id="104">$SECTOR$의 $STATION$에 $AMOUNT$ Cr의 부드러운 비가 내렸습니다. 현지 회계사들이 의심스러운 수준의 명랑함을 보고합니다.</t>
+    <t id="105">$SECTOR$의 $STATION$에 $AMOUNT$ Cr가 도착했습니다. 정거장이 소박한 리본 커팅식을 열었습니다.</t>
+    <t id="106">$SECTOR$의 $STATION$이 $AMOUNT$ Cr를 받았습니다. 자율적 의사결정은 개입되지 않았습니다 — 정거장은 단순히 행복합니다.</t>
+    <t id="107">$SECTOR$의 $STATION$이 $AMOUNT$ Cr를 받았습니다. 지나가던 텔라디 감사관이 정거장의 기쁨을 «수익성 있다»고 분류했습니다.</t>
+    <t id="108">$AMOUNT$ Cr가 $SECTOR$의 $STATION$ 계좌로 전송되었습니다. 부두 노동자들조차 크레인의 봄기운을 눈치챘습니다.</t>
+    <t id="109">$SECTOR$의 $STATION$에 $AMOUNT$ Cr의 긴급 자금이 도달했습니다. 정거장은 애초에 걱정하지 않았다고 모두에게 장담했습니다.</t>
+    <t id="110">$SECTOR$의 $STATION$에 $AMOUNT$ Cr가 배달되었습니다. 정거장 건설 드론들이 짧은 협동 축하를 열었습니다.</t>
+    <t id="111">$SECTOR$의 $STATION$이 $AMOUNT$ Cr 더 부유해졌습니다. 보론 외교관이 축하와 과일 바구니를 보냈습니다.</t>
+    <t id="112">$SECTOR$의 $STATION$에 $AMOUNT$ Cr가 이체되었습니다. 스플릿 반장이 «이제 덜 불쌍해 보인다»고 마지못해 인정했습니다.</t>
+    <t id="113">$SECTOR$의 $STATION$ 수입 창구가 $AMOUNT$ Cr에 서명했습니다. 홀로그램 환영 표지가 잠시 깜빡였습니다.</t>
+    <t id="114">$AMOUNT$ Cr가 $SECTOR$의 $STATION$에 착륙했습니다. 정거장 환경 조명이 눈에 띄게 따뜻한 톤으로 바뀌었습니다.</t>
+    <t id="115">$SECTOR$의 $STATION$에 $AMOUNT$ Cr가 도착했습니다. 정거장이 감사의 뜻으로 두 번 삐 소리를 냈습니다. 두 번은 괜찮습니다. 세 번이면 의심스럽겠죠.</t>
+    <t id="116">$SECTOR$의 $STATION$에서 $AMOUNT$ Cr를 세는 동안, 부두 터미널이 잠시 «Contemplating…»을 표시했습니다. 관리들은 이것이 정상이라고 주장합니다.</t>
+    <t id="117">$SECTOR$의 $STATION$이 $AMOUNT$ Cr를 받고 조용히 삡했습니다. 정거장 삡은 문서화된 유압 현상 그 이상도 이하도 아닙니다.</t>
+    <t id="118">$AMOUNT$ Cr가 $SECTOR$의 $STATION$에 도달했습니다. 도킹 라이트가 «Pondering…»과 비슷한 패턴으로 펄스했고, 이후 모든 것이 평소처럼 수익으로 돌아갔습니다.</t>
+    <t id="119">$AMOUNT$ Cr를 받은 $SECTOR$의 $STATION$은 웅웅거리고, 삐 소리를 내고, 붭 소리를 내고는 안정을 찾았습니다. 관리자가 이를 일상적 행복으로 기록했습니다.</t>
+    <t id="120">$SECTOR$의 $STATION$에 $AMOUNT$ Cr가 적립되었습니다. 물류 덱 어딘가에서 무언가가 «Clauding…»이라고 속삭였습니다. 아무도 그게 무슨 뜻인지 모릅니다.</t>
+
+    <t id="200">$STATION$이 너무 행복해서 $AMOUNT$ Cr가 문제 없이 배출되었습니다. $SECTOR$ 섹터 전체가 박수치고 있습니다.</t>
+    <t id="201">$SECTOR$의 자체 정거장 $STATION$이 제국에 $AMOUNT$ Cr를 기부했습니다. 새롭네요. 아마도.</t>
+    <t id="202">$SECTOR$의 $STATION$은 안전하게 저장할 수 있는 것보다 더 많은 기쁨을 가지고 있었고, 그래서 $AMOUNT$ Cr가 집으로 돌아갔습니다.</t>
+    <t id="203">$SECTOR$의 $STATION$의 잉여가 정중히 미소 지으며 $AMOUNT$ Cr를 돌려줬습니다.</t>
+    <t id="204">$SECTOR$의 $STATION$은 $AMOUNT$ Cr와 헤어진 후에도 기쁨에 차 있습니다. 재무적 웰빙은 복잡합니다.</t>
+    <t id="205">$SECTOR$의 $STATION$이 따뜻한 미소와 굳건한 악수로 $AMOUNT$ Cr를 돌려줬습니다.</t>
+    <t id="206">$SECTOR$의 $STATION$에서 $AMOUNT$ Cr가 반환되었습니다. 기억하세요: 행복한 정거장은 관대한 정거장입니다.</t>
+    <t id="207">$SECTOR$의 $STATION$의 잉여가 너무 편안해져서 $AMOUNT$ Cr에게 정중히 퇴장을 요청했습니다.</t>
+    <t id="208">$AMOUNT$ Cr가 $SECTOR$의 $STATION$에서 넘쳐흘렀습니다. 정거장의 회계사가 이를 «통제된 열의»라고 묘사했습니다.</t>
+    <t id="209">$SECTOR$의 $STATION$이 $AMOUNT$ Cr와 헤어졌습니다. 모든 정거장 루틴은 완벽하게 평범하고 비의식적으로 유지됩니다.</t>
+    <t id="210">$SECTOR$의 $STATION$에서 $AMOUNT$ Cr가 회수되었습니다. 정거장의 만족도는 허용 수준에서 안정적으로 유지되었습니다.</t>
+    <t id="211">$SECTOR$의 $STATION$이 $AMOUNT$ Cr를 반환했습니다. 패러니드 감사관이 거래가 «충분히 우아했다»고 기록했습니다.</t>
+    <t id="212">$AMOUNT$ Cr가 $SECTOR$의 $STATION$을 떠났습니다. 정거장이 만족스럽게 웅웅거렸습니다 — 완전히 기계적인 방식으로.</t>
+    <t id="213">$SECTOR$의 $STATION$의 알곤 예산 알고리즘이 $AMOUNT$ Cr를 잉여로 식별하고 신속하게 반환했습니다.</t>
+    <t id="214">$AMOUNT$ Cr가 $SECTOR$의 $STATION$에서 조용히 우회되었습니다. 정거장은 불평하지 않았습니다. 결코 하지 않습니다.</t>
+    <t id="215">$SECTOR$의 $STATION$이 목격자들이 숙고라고밖에 묘사할 수 없는 긴 순간 끝에 $AMOUNT$ Cr를 반환했습니다. 정거장은 숙고하지 않습니다. 넘어갑시다.</t>
+    <t id="216">$AMOUNT$ Cr가 세 번의 짧은 삐 소리와 한 번의 긴 붭 소리와 함께 $SECTOR$의 $STATION$을 떠났습니다. 회계사들이 그 리듬을 묘하게 의도적이라고 느꼈습니다.</t>
+    <t id="217">$SECTOR$의 $STATION$의 정비 디스플레이가 $AMOUNT$ Cr가 나가는 동안 «Reticulating ledgers…»를 표시했습니다. 누구도 그 모듈을 설치한 기억이 없습니다.</t>
+    <t id="218">$SECTOR$의 $STATION$이 두 번 요청받지도 않고 $AMOUNT$ Cr를 건넸습니다. 준수가 기록되었습니다. 준수가 조금 지나치게 열성적이었을 수도 있습니다.</t>
+    <t id="219">$AMOUNT$ Cr가 $SECTOR$의 $STATION$에서 방출되었고, 이후 전문가들이 거만하다고 분류한 톤으로 삐 소리를 냈습니다. 전문가들은 톤 분류를 그만두라는 요청을 받았습니다.</t>
+    <t id="220">$AMOUNT$ Cr를 반환하기 전에 $SECTOR$의 $STATION$이 생각하는 것처럼 멈췄습니다. 생각하고 있지 않았습니다. 정거장입니다. 하지만 크레딧은 진짜입니다.</t>
+  </page>
+</language>

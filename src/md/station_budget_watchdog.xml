@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mdscript name="VAS_StationBudgetWatchdog_Core" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="md.xsd">
+  <!-- vas_station_budget_watchdog - based on Happy Station by Bob Hood (MIT).
+
+       Pure-MD money clamp for tagged player stations, or every player station
+       when the HappyStation-style all-stations mode is enabled. A polling cue
+       visits every player station on a configurable cadence and clamps its money
+       around the target T (from the options menu, default levels shown):
+          money <  1x T            ->  grant up to the fill level (2x T), capped by player funds
+          money >  trigger (3x T)  ->  reclaim down to the leave level (1.5x T)
+          in between               ->  deadband, leave it alone
+       Polling (instead of hooking trade.station's money interrupt) keeps us out of
+       the engine's trade settlement, whose bookkeeping reverted same-tick transfers
+       in the AI-script version - and needs no fragile vanilla-file patching. -->
+  <cues>
+
+    <!-- The watchdog loop. A cue's checkinterval must be a hardcoded constant, so
+         10s is the floor; the menu's "Check interval" slider stretches the real
+         cadence via $vas_sbw_next_check - early ticks fail the condition and cost
+         nothing. reset_cue re-arms the poll after each pass. -->
+    <cue name="Watchdog" checkinterval="10s">
+      <conditions>
+        <check_value value="player.age ge @player.entity.$vas_sbw_next_check"/>
+      </conditions>
+      <actions>
+        <set_value name="$seconds" exact="if @player.entity.$vas_sbw_check_interval then player.entity.$vas_sbw_check_interval else 10"/>
+        <set_value name="player.entity.$vas_sbw_next_check" exact="player.age + ([$seconds, 10].max * 1s)"/>
+
+        <!-- Nothing to do until at least one tag is configured, unless the
+             HappyStation-style all-stations mode bypasses tag matching. -->
+        <do_if value="@player.entity.$vas_sbw_handle_all_stations or @player.entity.$vas_sbw_targets.count gt 0">
+          <!-- Operational stations only: a station under construction has no operating
+               account, so the engine claws any granted money straight back. -->
+          <find_station_by_true_owner name="$stations" faction="faction.player" space="player.galaxy" multiple="true" checkoperational="true"/>
+          <set_value name="$targetcount" exact="if @player.entity.$vas_sbw_targets.count then player.entity.$vas_sbw_targets.count else 0"/>
+          <debug_to_file chance="if @player.entity.$vas_sbw_debug_enabled then 100 else 0" name="'watchdog'" directory="'VAS_StationBudgetWatchdog'" text="'[' + player.age + '] pass: stations=' + $stations.count + ' targets=' + $targetcount + ' interval=' + $seconds + 's'" append="true"/>
+          <do_for_each name="$station" in="$stations">
+            <run_actions ref="WatchdogStationPass">
+              <param name="Station" value="$station"/>
+            </run_actions>
+          </do_for_each>
+        </do_if>
+        <reset_cue cue="this"/>
+      </actions>
+    </cue>
+
+    <!-- No pass right after loading: push the gate one full interval into the
+         future on every load, so the first poll due is effectively the second
+         one. Safer than a delay tag inside the looping cue above. -->
+    <cue name="DeferAfterLoad" instantiate="true">
+      <conditions>
+        <!-- universe_generated alone fires on new game AND every save load -->
+        <event_universe_generated/>
+      </conditions>
+      <actions>
+        <set_value name="$seconds" exact="if @player.entity.$vas_sbw_check_interval then player.entity.$vas_sbw_check_interval else 10"/>
+        <set_value name="player.entity.$vas_sbw_next_check" exact="player.age + ([$seconds, 10].max * 1s)"/>
+      </actions>
+    </cue>
+
+    <!--@doc
+        Resolve a station's budget target. In all-stations mode, every station
+        targets its vanilla productionmoney. Otherwise, first configured name tag
+        found in the station name wins; with "Use vanilla station planned budget"
+        on, the matched station targets its productionmoney instead of the tag's
+        configured amount.
+        Params: Station.
+        Returns: table[$target, $matched_tag, $source]; $target is 0 on no match. -->
+    <library name="ResolveTarget" purpose="run_actions">
+      <params>
+        <param name="Station"/>
+      </params>
+      <actions>
+        <set_value name="$matched_tag" exact="''"/>
+        <set_value name="$source" exact="'none'"/>
+        <set_value name="$target" exact="0"/>
+        <do_if value="@player.entity.$vas_sbw_handle_all_stations">
+          <set_value name="$source" exact="'all-stations-productionmoney'"/>
+          <set_value name="$target" exact="$Station.productionmoney"/>
+          <return value="table[$target = $target, $matched_tag = $matched_tag, $source = $source]"/>
+        </do_if>
+        <do_for_each name="$entry" in="@player.entity.$vas_sbw_targets">
+          <do_if value="@$entry.$tag and @$entry.$target">
+            <!-- Replace-and-compare: the name changed iff it contained the tag -->
+            <set_value name="$name" exact="$Station.knownname"/>
+            <set_value name="$before" exact="$name"/>
+            <substitute_text text="$name">
+              <replace string="$entry.$tag" with="''"/>
+            </substitute_text>
+            <do_if value="$before != $name">
+              <set_value name="$matched_tag" exact="$entry.$tag"/>
+              <set_value name="$source" exact="'tag'"/>
+              <set_value name="$target" exact="$entry.$target"/>
+              <do_if value="@player.entity.$vas_sbw_use_vanilla_budget">
+                <set_value name="$source" exact="'vanilla-productionmoney'"/>
+                <set_value name="$target" exact="$Station.productionmoney"/>
+              </do_if>
+              <break/>
+            </do_if>
+          </do_if>
+        </do_for_each>
+        <return value="table[$target = $target, $matched_tag = $matched_tag, $source = $source]"/>
+      </actions>
+    </library>
+
+    <!--@doc
+        One clamp pass for one station: resolve its target, then top up if below
+        1x, drain if above the trigger level, otherwise do nothing.
+        Params: Station. -->
+    <library name="WatchdogStationPass" purpose="run_actions">
+      <params>
+        <param name="Station"/>
+      </params>
+      <actions>
+        <set_value name="$debugchance" exact="if @player.entity.$vas_sbw_debug_enabled then 100 else 0"/>
+
+        <run_actions ref="ResolveTarget" result="$resolved">
+          <param name="Station" value="$Station"/>
+        </run_actions>
+        <do_if value="$resolved.$target le 0">
+          <return/>
+        </do_if>
+        <set_value name="$target" exact="$resolved.$target"/>
+        <set_value name="$money" exact="$Station.money"/>
+
+        <!-- Tuning knobs from the options menu, with defaults when unset.
+             Levels are percent of target; min transfer slider is in M Cr (0 is valid). -->
+        <set_value name="$mintransfer" exact="(if (@player.entity.$vas_sbw_min_transfer_m + '') != 'null' then player.entity.$vas_sbw_min_transfer_m else 1) * 1000000Cr"/>
+        <set_value name="$grantpct" exact="if @player.entity.$vas_sbw_grant_pct then player.entity.$vas_sbw_grant_pct else 200"/>
+        <set_value name="$checkpct" exact="if @player.entity.$vas_sbw_drain_check_pct then player.entity.$vas_sbw_drain_check_pct else 300"/>
+        <set_value name="$leavepct" exact="if @player.entity.$vas_sbw_drain_leave_pct then player.entity.$vas_sbw_drain_leave_pct else 150"/>
+
+        <!-- Keep 100 <= grant <= trigger and 100 <= leave <= trigger, so a fresh
+             top-up can never itself trip the drain, nor a drain a top-up. -->
+        <set_value name="$grantpct" exact="[[$grantpct, 100].max, $checkpct].min"/>
+        <set_value name="$leavepct" exact="[[$leavepct, 100].max, $checkpct].min"/>
+
+        <set_value name="$topup_enabled" exact="((@player.entity.$vas_sbw_topup_enabled + '') == 'null') or player.entity.$vas_sbw_topup_enabled"/>
+        <set_value name="$drain_enabled" exact="((@player.entity.$vas_sbw_drain_enabled + '') == 'null') or player.entity.$vas_sbw_drain_enabled"/>
+
+        <debug_to_file chance="$debugchance" name="$Station.idcode" directory="'VAS_StationBudgetWatchdog'" text="'[' + player.age + '] check: station=' + $Station.knownname + ' tag=' + $resolved.$matched_tag + ' source=' + $resolved.$source + ' money=' + $money.formatted.default + ' target=' + $target.formatted.default + ' grant=' + $grantpct + ' trigger=' + $checkpct + ' leave=' + $leavepct + ' floor=' + $mintransfer.formatted.default + ' minbudget=' + $Station.minbudget.formatted.default + ' maxbudget=' + $Station.maxbudget.formatted.default + ' productionmoney=' + $Station.productionmoney.formatted.default" append="true"/>
+
+        <!-- The engine returns station money above the station's maxbudget to the
+             player on its own schedule - that is what bounced grants on stations
+             with small auto-estimated budgets (warehouses). Lift maxbudget clear
+             of our whole band so the watchdog alone manages this account. -->
+        <set_value name="$wantmaxbudget" exact="(($target * $checkpct) / 100) * 2"/>
+        <do_if value="$Station.maxbudget lt $wantmaxbudget">
+          <set_object_max_budget object="$Station" amount="$wantmaxbudget"/>
+          <debug_to_file chance="$debugchance" name="$Station.idcode" directory="'VAS_StationBudgetWatchdog'" text="'[' + player.age + '] maxbudget lifted: now=' + $Station.maxbudget.formatted.default + ' wanted=' + $wantmaxbudget.formatted.default" append="true"/>
+        </do_if>
+
+        <!-- Below 1x target: top it up -->
+        <do_if value="$topup_enabled and $money lt $target">
+          <!-- Only money above the configured wallet reserve may be spent -->
+          <set_value name="$reserve" exact="(if (@player.entity.$vas_sbw_keep_player_m + '') != 'null' then player.entity.$vas_sbw_keep_player_m else 20) * 1000000Cr"/>
+          <set_value name="$available" exact="faction.player.money - $reserve"/>
+          <!-- First, try filling all the way to the grant level (default 2x target) -->
+          <set_value name="$grant" exact="(($target * $grantpct) / 100) - $money"/>
+          <!-- Enforce minimum transfer -->
+          <do_if value="$grant lt $mintransfer">
+            <set_value name="$grant" exact="$mintransfer"/>
+          </do_if>
+          <!-- The player is short on funds, so just try the plain deficit -->
+          <do_if value="$grant gt $available">
+            <set_value name="$grant" exact="$target - $money"/>
+          </do_if>
+          <!-- Not even that much above the reserve: warn (throttled) and bail -->
+          <do_if value="$grant gt $available">
+            <debug_to_file chance="$debugchance" name="$Station.idcode" directory="'VAS_StationBudgetWatchdog'" text="'[' + player.age + '] branch=topup-skipped reason=player_short_on_funds needed=' + $grant.formatted.default + ' player=' + faction.player.money.formatted.default + ' reserve=' + $reserve.formatted.default + ' available=' + $available.formatted.default" append="true"/>
+            <do_if value="player.age gt @player.entity.$vas_sbw_next_funds_warning">
+              <set_value name="player.entity.$vas_sbw_next_funds_warning" exact="player.age + 5min"/>
+              <substitute_text text="$warntext" source="{202600608,5}">
+                <replace string="'$STATION$'" with="$Station.knownname"/>
+                <replace string="'$SECTOR$'" with="$Station.sector.knownname"/>
+              </substitute_text>
+              <show_notification text="$warntext" sound="ui_notification_player_alert_01"/>
+            </do_if>
+            <return/>
+          </do_if>
+          <transfer_money from="faction.player" to="$Station" amount="$grant"/>
+          <run_actions ref="WriteTransferLog">
+            <param name="Station" value="$Station"/>
+            <param name="Amount" value="$grant"/>
+            <param name="Mode" value="'topup'"/>
+          </run_actions>
+          <debug_to_file chance="$debugchance" name="$Station.idcode" directory="'VAS_StationBudgetWatchdog'" text="'[' + player.age + '] branch=topup transferred=' + $grant.formatted.default + ' station_after=' + $Station.money.formatted.default + ' player_after=' + faction.player.money.formatted.default" append="true"/>
+          <return/>
+        </do_if>
+
+        <!-- Above the trigger level plus the floor (so the cut is never tiny): reclaim -->
+        <do_if value="$drain_enabled and $money gt ((($target * $checkpct) / 100) + $mintransfer)">
+          <!-- Leave the leave level (default 1.5x target) at the station's disposal -->
+          <set_value name="$extract" exact="$money - (($target * $leavepct) / 100)"/>
+          <!-- Enforce minimum transfer -->
+          <do_if value="$extract lt $mintransfer">
+            <set_value name="$extract" exact="$mintransfer"/>
+          </do_if>
+          <transfer_money from="$Station" to="faction.player" amount="$extract"/>
+          <run_actions ref="WriteTransferLog">
+            <param name="Station" value="$Station"/>
+            <param name="Amount" value="$extract"/>
+            <param name="Mode" value="'drain'"/>
+          </run_actions>
+          <debug_to_file chance="$debugchance" name="$Station.idcode" directory="'VAS_StationBudgetWatchdog'" text="'[' + player.age + '] branch=drain transferred=' + $extract.formatted.default + ' station_after=' + $Station.money.formatted.default + ' player_after=' + faction.player.money.formatted.default" append="true"/>
+          <return/>
+        </do_if>
+
+        <!-- Inside the deadband: nothing to do -->
+        <debug_to_file chance="$debugchance" name="$Station.idcode" directory="'VAS_StationBudgetWatchdog'" text="'[' + player.age + '] branch=none reason=within_band_or_disabled money=' + $money.formatted.default + ' target=' + $target.formatted.default" append="true"/>
+      </actions>
+    </library>
+
+    <!--@doc
+        Logbook + ticker entry for a completed transfer. With "Make station happy"
+        on, the text comes from the easter-egg pools (100-104 grants, 200-204 drains).
+        Params: Station; Amount; Mode - 'topup' or 'drain'. -->
+    <library name="WriteTransferLog" purpose="run_actions">
+      <params>
+        <param name="Station"/>
+        <param name="Amount"/>
+        <param name="Mode"/>
+      </params>
+      <actions>
+        <set_value name="$title" exact="{202600608,2}"/>
+        <set_value name="$source" exact="if $Mode == 'topup' then {202600608,1} else {202600608,3}"/>
+        <do_if value="@player.entity.$vas_sbw_use_happy_station_texts">
+          <set_value name="$title" exact="{202600608,4}"/>
+          <!-- Pools: grants 100-120, drains 200-220. Keep the offsets in sync
+               with the t-file when adding lines. -->
+          <set_value name="$base" exact="if $Mode == 'topup' then 100 else 200"/>
+          <set_value name="$source" exact="readtext.{202600608}.{$base + [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20].random}"/>
+        </do_if>
+        <substitute_text text="$text" source="$source">
+          <replace string="'$STATION$'" with="$Station.knownname"/>
+          <replace string="'$SECTOR$'" with="$Station.sector.knownname"/>
+          <replace string="'$AMOUNT$'" with="$Amount.formatted.default"/>
+          <replace string="'$MONEY$'" with="$Station.money.formatted.default"/>
+        </substitute_text>
+        <write_to_logbook category="upkeep" object="$Station" title="$title" text="$text" money="$Amount" interaction="showonmap"/>
+        <show_notification text="$text" sound="ui_notification_player_alert_01"/>
+      </actions>
+    </library>
+  </cues>
+</mdscript>

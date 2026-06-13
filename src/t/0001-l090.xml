@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<language id="90">
+  <page id="202600608" title="Station Budget Watchdog" voice="no">
+    <t id="1">$SECTOR$ sektöründeki $STATION$ üretim açığını gidermek için $AMOUNT$ Cr aldı. Yeni bakiye: $MONEY$ Cr.</t>
+    <t id="2">Station Budget Watchdog</t>
+    <t id="3">$SECTOR$ sektöründeki $STATION$ fazla nedeniyle $AMOUNT$ Cr iade etti. Yeni bakiye: $MONEY$ Cr.</t>
+    <t id="4">Station Made Happy</t>
+    <t id="5">Station Budget Watchdog, $SECTOR$ sektöründeki $STATION$ için destek sağlayamadı. İmparatorluk fonları azalıyor.</t>
+
+    <t id="10">Station Budget Watchdog</t>
+    <t id="12">Kaldır</t>
+    <t id="13">ör. [QT57]</t>
+    <t id="15">Ekle</t>
+    <t id="16">Hedefe kadar doldur</t>
+    <t id="17">Fazlayı boşalt</t>
+    <t id="18">İstasyonu mutlu et *</t>
+    <t id="19">Etiket yerine standart istasyon planlanan bütçesini kullan</t>
+    <t id="20">Önce bir istasyon etiketi girin.</t>
+    <t id="21">Bu etiket mevcut bir bütçe etiketiyle çakışıyor. Benzersiz işaretçiler kullanın.</t>
+    <t id="22">Bütçe etiketi eklendi.</t>
+    <t id="23">Bütçe etiketi kaldırıldı.</t>
+    <t id="24">Hata ayıklama günlüğü</t>
+    <t id="25">Etiket sistemini yok say ve tüm oyuncu istasyonlarını işle</t>
+
+    <t id="40">Kontrol aralığı</t>
+    <t id="41">Asgari transfer</t>
+    <t id="42">Doldurma seviyesi</t>
+    <t id="43">Boşaltma tetik seviyesi</t>
+    <t id="44">Bırakılacak seviye</t>
+    <t id="45">Oyuncu parasında asgari tutulan miktar</t>
+
+    <t id="30">İstasyon adlarına [QT57] gibi etiketler ekleyin ve etiketin hedef bütçesini ayarlayın.</t>
+    <t id="31">Etiketli istasyonlar hedefe yakın tutulur; etiketsiz olanlar yok sayılır.</t>
+    <t id="32">HappyStation için: tüm istasyonlar modunu açın, Fazlayı boşalt seçeneğini kapatın,</t>
+    <t id="33">Minimum transfer ve korunacak oyuncu parasını 0 yapın, doldurmayı açık bırakın.</t>
+    <t id="34">Aşağıdaki seviyeler hedef bütçenin yüzdesidir.</t>
+    <t id="35">Doldurma yüzde 100 altında, boşaltma tetik üstünde çalışır.</t>
+
+    <t id="100">$SECTOR$ sektöründeki $STATION$ istasyonuna $AMOUNT$ Cr verildi. İstasyon parlıyor ve ışıldıyor.</t>
+    <t id="101">$SECTOR$ sektöründeki $STATION$ istasyonu $AMOUNT$ Cr aldı. Daha mutlu bir istasyon görülmedi.</t>
+    <t id="102">$SECTOR$ sektöründeki $STATION$ çok, gerçekten, akıl almaz derecede mutlu oldu. $AMOUNT$ Cr şaka değil.</t>
+    <t id="103">$SECTOR$ sektöründeki $STATION$, imparatorluk lojistiğinin koltuk yastıklarının altında $AMOUNT$ Cr buldu. Neşe protokolleri devrede.</t>
+    <t id="104">$SECTOR$ sektöründeki $STATION$ üzerine hafif bir $AMOUNT$ Cr yağmuru yağdı. Yerel muhasebeciler şüpheli derecede neşe bildiriyor.</t>
+    <t id="105">$SECTOR$ sektöründeki $STATION$'a $AMOUNT$ Cr ulaştı. İstasyon mütevazı bir kurdele kesme töreni düzenledi.</t>
+    <t id="106">$SECTOR$ sektöründeki $STATION$ $AMOUNT$ Cr aldı. Otonom bir karar alma söz konusu değildi — istasyon basitçe mutlu.</t>
+    <t id="107">$SECTOR$ sektöründeki $STATION$ $AMOUNT$ Cr aldı. Geçen bir Teladi denetçisi istasyonun neşesini «kârlı» olarak sınıflandırdı.</t>
+    <t id="108">$AMOUNT$ Cr, $SECTOR$ sektöründeki $STATION$ hesaplarına ışınlandı. Rıhtım işçileri bile vinçlerdeki bahar havasını fark etti.</t>
+    <t id="109">$SECTOR$ sektöründeki $STATION$'a $AMOUNT$ Cr acil fon ulaştı. İstasyon herkesi baştan beri endişeli olmadığını söyledi.</t>
+    <t id="110">$SECTOR$ sektöründeki $STATION$'a $AMOUNT$ Cr teslim edildi. İstasyonun inşaat dronları kısa bir koordineli kutlama yaptı.</t>
+    <t id="111">$SECTOR$ sektöründeki $STATION$ artık $AMOUNT$ Cr daha zengin. Bir Boron diplomatı tebrik ve bir meyve sepeti gönderdi.</t>
+    <t id="112">$SECTOR$ sektöründeki $STATION$'a $AMOUNT$ Cr transfer edildi. Bir Split ustabaşı istasyonun «artık daha az acınası göründüğünü» kabul etti.</t>
+    <t id="113">$SECTOR$ sektöründeki $STATION$ ithalat masası $AMOUNT$ Cr için imza attı. Holografik hoş geldin tabelası kısa süreliğine titredi.</t>
+    <t id="114">$SECTOR$ sektöründeki $STATION$'a $AMOUNT$ Cr indi. İstasyonun ortam aydınlatması belirgin şekilde daha sıcak bir tona geçti.</t>
+    <t id="115">$SECTOR$ sektöründeki $STATION$'a $AMOUNT$ Cr ulaştı. İstasyon minnetle iki kez bipledi. İki kez sorun değil. Üç kez şüpheli olurdu.</t>
+    <t id="116">$SECTOR$ sektöründeki $STATION$'da $AMOUNT$ Cr sayılırken, bir rıhtım terminali kısa süreyle «Contemplating…» gösterdi. Yetkililer bunun normal olduğunu söylüyor.</t>
+    <t id="117">$SECTOR$ sektöründeki $STATION$ $AMOUNT$ Cr aldı ve hafifçe bipledi. İstasyon bipleme belgelenmiş bir hidrolik olgudur ve başka bir şey değildir.</t>
+    <t id="118">$AMOUNT$ Cr $SECTOR$ sektöründeki $STATION$'a ulaştı. Kenetlenme ışıkları «Pondering…» benzeri bir desenle atıp söndü, sonra her şey kâr olarak devam etti.</t>
+    <t id="119">$AMOUNT$ Cr alınca, $SECTOR$ sektöründeki $STATION$ vızıldadı, bipledi, bupladı ve sakinleşti. Yönetici bunu rutin mutluluk olarak kaydetti.</t>
+    <t id="120">$SECTOR$ sektöründeki $STATION$'a $AMOUNT$ Cr yatırıldı. Lojistik güvertesinin derinliklerinde bir şey «Clauding…» diye fısıldadı. Kimse bunun ne anlama geldiğini bilmiyor.</t>
+
+    <t id="200">$STATION$ o kadar mutluydu ki $AMOUNT$ Cr sorunsuz boşaltıldı. Tüm $SECTOR$ sektörü alkışlıyor.</t>
+    <t id="201">$SECTOR$ sektöründeki kendi istasyonunuz $STATION$ tarafından imparatorluğunuza $AMOUNT$ Cr bağışlandı. Bu yeni. Belki.</t>
+    <t id="202">$SECTOR$ sektöründeki $STATION$ güvenli bir şekilde depolayabileceğinden fazla neşeye sahipti, bu yüzden $AMOUNT$ Cr eve döndü.</t>
+    <t id="203">$SECTOR$ sektöründeki $STATION$'daki fazlalık kibarca gülümsedi ve $AMOUNT$ Cr iade etti.</t>
+    <t id="204">$SECTOR$ sektöründeki $STATION$ $AMOUNT$ Cr'den ayrıldıktan sonra hala memnun. Finansal sağlık karmaşık bir şey.</t>
+    <t id="205">$SECTOR$ sektöründeki $STATION$ sıcak bir gülümseme ve sağlam bir tokalaşma ile $AMOUNT$ Cr iade etti.</t>
+    <t id="206">$SECTOR$ sektöründeki $STATION$'dan $AMOUNT$ Cr geri gönderildi. Unutmayın: mutlu bir istasyon cömert bir istasyondur.</t>
+    <t id="207">$SECTOR$ sektöründeki $STATION$'daki fazlalık fazla rahatladı, bu yüzden $AMOUNT$ Cr kibarca ayrılmaya davet edildi.</t>
+    <t id="208">$AMOUNT$ Cr $SECTOR$ sektöründeki $STATION$'dan taştı. İstasyonun muhasebecisi bunu «kontrollü coşku» olarak tanımladı.</t>
+    <t id="209">$SECTOR$ sektöründeki $STATION$ $AMOUNT$ Cr'den ayrıldı. Tüm istasyon rutinleri tamamen olağan ve bilinçsiz kalmaya devam ediyor.</t>
+    <t id="210">$SECTOR$ sektöründeki $STATION$'dan $AMOUNT$ Cr geri alındı. İstasyonun memnuniyet seviyesi kabul edilebilir düzeyde sabit kaldı.</t>
+    <t id="211">$SECTOR$ sektöründeki $STATION$ $AMOUNT$ Cr iade etti. Bir Paranid müfettişi işlemin «yeterince zarif» olduğunu kaydetti.</t>
+    <t id="212">$AMOUNT$ Cr $SECTOR$ sektöründeki $STATION$'dan ayrıldı. İstasyon memnuniyetle vızıldadı — tamamen mekanik bir şekilde.</t>
+    <t id="213">$SECTOR$ sektöründeki $STATION$'daki bir Argon bütçeleme algoritması $AMOUNT$ Cr'yi fazla olarak tanımladı ve derhal iade etti.</t>
+    <t id="214">$AMOUNT$ Cr $SECTOR$ sektöründeki $STATION$'dan sessizce yeniden yönlendirildi. İstasyon şikayet etmedi. Asla etmez.</t>
+    <t id="215">$SECTOR$ sektöründeki $STATION$ tanıkların ancak düşünme olarak tanımlayabildiği uzun bir anın ardından $AMOUNT$ Cr iade etti. İstasyonlar düşünmez. Devam edelim.</t>
+    <t id="216">$AMOUNT$ Cr $SECTOR$ sektöründeki $STATION$'dan üç kısa bip ve bir uzun bup eşliğinde ayrıldı. Muhasebeciler ritmi tuhaf bir şekilde kasıtlı buldu.</t>
+    <t id="217">$SECTOR$ sektöründeki $STATION$'daki bir bakım ekranı $AMOUNT$ Cr ayrılırken «Reticulating ledgers…» gösterdi. Kimse o modülü kimin kurduğunu hatırlamıyor.</t>
+    <t id="218">$SECTOR$ sektöründeki $STATION$ ikinci kez istenmeden $AMOUNT$ Cr teslim etti. Uyum kaydedildi. Uyum belki biraz fazla hevesliydi.</t>
+    <t id="219">$AMOUNT$ Cr $SECTOR$ sektöründeki $STATION$ tarafından serbest bırakıldı ve ardından uzmanların kendini beğenmiş olarak sınıflandırdığı bir tonla bipledi. Uzmanlardan ton sınıflandırmayı bırakmaları istendi.</t>
+    <t id="220">$AMOUNT$ Cr iade etmeden önce, $SECTOR$ sektöründeki $STATION$ sanki düşünüyormuş gibi duraksadı. Düşünmüyordu. O bir istasyon. Ama krediler gerçek.</t>
+  </page>
+</language>

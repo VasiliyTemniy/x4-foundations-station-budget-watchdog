@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<language id="86">
+  <page id="202600608" title="Station Budget Watchdog" voice="no">
+    <t id="1">$SECTOR$的$STATION$获得了$AMOUNT$ Cr以弥补生产赤字。新余额：$MONEY$ Cr。</t>
+    <t id="2">Station Budget Watchdog</t>
+    <t id="3">$SECTOR$的$STATION$因盈余返还了$AMOUNT$ Cr。新余额：$MONEY$ Cr。</t>
+    <t id="4">Station Made Happy</t>
+    <t id="5">Station Budget Watchdog无法为$SECTOR$的$STATION$充值。帝国资金不足。</t>
+
+    <t id="10">Station Budget Watchdog</t>
+    <t id="12">移除</t>
+    <t id="13">例如 [QT57]</t>
+    <t id="15">添加</t>
+    <t id="16">补充至目标</t>
+    <t id="17">排出盈余</t>
+    <t id="18">让空间站开心 *</t>
+    <t id="19">使用原版计划预算而非标签</t>
+    <t id="20">请先输入空间站标签。</t>
+    <t id="21">此标签与现有预算标签重叠。请使用唯一标记。</t>
+    <t id="22">预算标签已添加。</t>
+    <t id="23">预算标签已移除。</t>
+    <t id="24">调试日志</t>
+    <t id="25">忽略标签系统并处理所有玩家空间站</t>
+
+    <t id="40">检查间隔</t>
+    <t id="41">最小转账</t>
+    <t id="42">补充水位</t>
+    <t id="43">排出触发水位</t>
+    <t id="44">保留水位</t>
+    <t id="45">玩家最低保留资金</t>
+
+    <t id="30">给空间站名称添加类似 [QT57] 的标签，并设置该标签的目标预算。</t>
+    <t id="31">有标签的空间站会保持在目标附近；无标签空间站会被忽略。</t>
+    <t id="32">HappyStation 行为：启用全空间站模式，关闭排出盈余，</t>
+    <t id="33">将最小转账和玩家最低保留资金设为0，并保持补充启用。</t>
+    <t id="34">以下水位是目标预算的百分比。</t>
+    <t id="35">补充在100%以下触发，排出在触发水位以上执行。</t>
+
+    <t id="100">$SECTOR$的$STATION$获得了$AMOUNT$ Cr拨款。空间站闪闪发光。</t>
+    <t id="101">$SECTOR$的$STATION$收到了$AMOUNT$ Cr。从未见过更开心的空间站。</t>
+    <t id="102">$SECTOR$的$STATION$变得非常、真的、无法估量地开心。$AMOUNT$ Cr可不是小数目。</t>
+    <t id="103">$SECTOR$的$STATION$刚在帝国物流沙发垫下发现了$AMOUNT$ Cr。快乐协议已启动。</t>
+    <t id="104">$SECTOR$的$STATION$下了一场$AMOUNT$ Cr的温柔雨。当地会计师报告了可疑的高兴程度。</t>
+    <t id="105">$AMOUNT$ Cr抵达$SECTOR$的$STATION$。空间站举行了一个简朴的剪彩仪式。</t>
+    <t id="106">$SECTOR$的$STATION$收到了$AMOUNT$ Cr。没有涉及自主决策——空间站只是开心。</t>
+    <t id="107">$SECTOR$的$STATION$收到了$AMOUNT$ Cr。路过的特拉迪审计员将空间站的快乐归类为"有利可图"。</t>
+    <t id="108">$AMOUNT$ Cr被传送至$SECTOR$的$STATION$的账户。连码头工人都注意到了起重机上的春意。</t>
+    <t id="109">$SECTOR$的$STATION$收到了$AMOUNT$ Cr的紧急资金。空间站向所有人保证它一开始就不担心。</t>
+    <t id="110">$AMOUNT$ Cr被送达$SECTOR$的$STATION$。空间站的建造无人机举行了一次简短的协调庆祝。</t>
+    <t id="111">$SECTOR$的$STATION$现在富了$AMOUNT$ Cr。一位波伦外交官送来了祝贺和果篮。</t>
+    <t id="112">$AMOUNT$ Cr已转至$SECTOR$的$STATION$。一位斯普利特工头勉强承认空间站"现在看起来不那么可怜了"。</t>
+    <t id="113">$SECTOR$的$STATION$的进口柜台签收了$AMOUNT$ Cr。全息欢迎牌短暂闪烁了一下。</t>
+    <t id="114">$AMOUNT$ Cr降落在$SECTOR$的$STATION$。空间站的环境照明明显转向更暖的色调。</t>
+    <t id="115">$AMOUNT$ Cr抵达$SECTOR$的$STATION$。空间站感激地哔了两声。两声没问题。三声就可疑了。</t>
+    <t id="116">在$SECTOR$的$STATION$清点$AMOUNT$ Cr时，码头终端短暂显示"Contemplating…"。官员坚称这很正常。</t>
+    <t id="117">$SECTOR$的$STATION$收到$AMOUNT$ Cr后轻轻哔了一声。空间站哔声是已记录的水压现象，仅此而已。</t>
+    <t id="118">$AMOUNT$ Cr抵达$SECTOR$的$STATION$。对接灯以类似"Pondering…"的模式脉冲，然后一切恢复如常的盈利。</t>
+    <t id="119">收到$AMOUNT$ Cr后，$SECTOR$的$STATION$嗡嗡响、哔哔叫、噗噗声，然后平静下来。经理将其记录为日常快乐。</t>
+    <t id="120">$AMOUNT$ Cr已记入$SECTOR$的$STATION$。在物流舱深处，有什么东西低语"Clauding…"。没人知道那是什么意思。</t>
+
+    <t id="200">$STATION$太开心了，$AMOUNT$ Cr被顺利排出，毫无问题。整个$SECTOR$星区都在鼓掌。</t>
+    <t id="201">$SECTOR$的自有空间站$STATION$向帝国捐赠了$AMOUNT$ Cr。这是新事。也许吧。</t>
+    <t id="202">$SECTOR$的$STATION$拥有的快乐超过了安全存储量，所以$AMOUNT$ Cr回家了。</t>
+    <t id="203">$SECTOR$的$STATION$的盈余礼貌地微笑着交还了$AMOUNT$ Cr。</t>
+    <t id="204">$SECTOR$的$STATION$在与$AMOUNT$ Cr分别后依然欣喜若狂。财务健康是件复杂的事。</t>
+    <t id="205">$SECTOR$的$STATION$带着温暖的微笑和坚定的握手归还了$AMOUNT$ Cr。</t>
+    <t id="206">$AMOUNT$ Cr已从$SECTOR$的$STATION$返还。记住：开心的空间站就是慷慨的空间站。</t>
+    <t id="207">$SECTOR$的$STATION$的盈余太安逸了，所以$AMOUNT$ Cr被礼貌地请了出去。</t>
+    <t id="208">$AMOUNT$ Cr从$SECTOR$的$STATION$溢出。空间站会计师将其描述为"受控的热情"。</t>
+    <t id="209">$SECTOR$的$STATION$与$AMOUNT$ Cr分别了。所有空间站程序继续保持完全普通且无意识。</t>
+    <t id="210">$AMOUNT$ Cr已从$SECTOR$的$STATION$回收。空间站满意度稳定在可接受水平。</t>
+    <t id="211">$SECTOR$的$STATION$归还了$AMOUNT$ Cr。一位帕拉尼德检查员记录该交易"足够优雅"。</t>
+    <t id="212">$AMOUNT$ Cr离开了$SECTOR$的$STATION$。空间站满意地嗡嗡作响——完全机械的方式。</t>
+    <t id="213">$SECTOR$的$STATION$的阿尔贡预算算法将$AMOUNT$ Cr识别为盈余并迅速归还。</t>
+    <t id="214">$AMOUNT$ Cr已从$SECTOR$的$STATION$悄悄改道。空间站没有抱怨。它从不抱怨。</t>
+    <t id="215">$SECTOR$的$STATION$在证人只能描述为沉思的漫长一刻后归还了$AMOUNT$ Cr。空间站不会沉思。继续前进。</t>
+    <t id="216">$AMOUNT$ Cr在三声短哔和一声长噗的伴随下离开了$SECTOR$的$STATION$。会计师觉得这节奏诡异般地刻意。</t>
+    <t id="217">$SECTOR$的$STATION$的一个维护显示器在$AMOUNT$ Cr离开时显示"Reticulating ledgers…"。没人记得安装过那个模块。</t>
+    <t id="218">$SECTOR$的$STATION$没等第二次要求就交出了$AMOUNT$ Cr。合规已被记录。合规也许有点过于积极了。</t>
+    <t id="219">$AMOUNT$ Cr被$SECTOR$的$STATION$释放，随后以专家归类为得意的音调哔了一声。专家们被要求停止对音调进行分类。</t>
+    <t id="220">在归还$AMOUNT$ Cr之前，$SECTOR$的$STATION$停顿了一下，仿佛在思考。它没有在思考。它是空间站。不过信用点是真实的。</t>
+  </page>
+</language>

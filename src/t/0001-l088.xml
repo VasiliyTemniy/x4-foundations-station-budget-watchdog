@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<language id="88">
+  <page id="202600608" title="Station Budget Watchdog" voice="no">
+    <t id="1">$SECTOR$的$STATION$獲得了$AMOUNT$ Cr以彌補生產赤字。新餘額：$MONEY$ Cr。</t>
+    <t id="2">Station Budget Watchdog</t>
+    <t id="3">$SECTOR$的$STATION$因盈餘返還了$AMOUNT$ Cr。新餘額：$MONEY$ Cr。</t>
+    <t id="4">Station Made Happy</t>
+    <t id="5">Station Budget Watchdog無法為$SECTOR$的$STATION$充值。帝國資金不足。</t>
+
+    <t id="10">Station Budget Watchdog</t>
+    <t id="12">移除</t>
+    <t id="13">例如 [QT57]</t>
+    <t id="15">新增</t>
+    <t id="16">補充至目標</t>
+    <t id="17">排出盈餘</t>
+    <t id="18">讓太空站開心 *</t>
+    <t id="19">使用原版計畫預算而非標籤</t>
+    <t id="20">請先輸入太空站標籤。</t>
+    <t id="21">此標籤與現有預算標籤重疊。請使用唯一標記。</t>
+    <t id="22">預算標籤已新增。</t>
+    <t id="23">預算標籤已移除。</t>
+    <t id="24">除錯日誌</t>
+    <t id="25">忽略標籤系統並處理所有玩家太空站</t>
+
+    <t id="40">檢查間隔</t>
+    <t id="41">最小轉帳</t>
+    <t id="42">補充水位</t>
+    <t id="43">排出觸發水位</t>
+    <t id="44">保留水位</t>
+    <t id="45">玩家最低保留資金</t>
+
+    <t id="30">為太空站名稱加入類似 [QT57] 的標籤，並設定該標籤的目標預算。</t>
+    <t id="31">有標籤的太空站會保持在目標附近；無標籤太空站會被忽略。</t>
+    <t id="32">HappyStation 行為：啟用全太空站模式，關閉排出盈餘，</t>
+    <t id="33">將最小轉帳和玩家最低保留資金設為0，並保持補充啟用。</t>
+    <t id="34">以下水位是目標預算的百分比。</t>
+    <t id="35">補充在100%以下觸發，排出在觸發水位以上執行。</t>
+
+    <t id="100">$SECTOR$的$STATION$獲得了$AMOUNT$ Cr撥款。太空站閃閃發光。</t>
+    <t id="101">$SECTOR$的$STATION$收到了$AMOUNT$ Cr。從未見過更開心的太空站。</t>
+    <t id="102">$SECTOR$的$STATION$變得非常、真的、無法估量地開心。$AMOUNT$ Cr可不是小數目。</t>
+    <t id="103">$SECTOR$的$STATION$剛在帝國物流沙發墊下發現了$AMOUNT$ Cr。快樂協議已啟動。</t>
+    <t id="104">$SECTOR$的$STATION$下了一場$AMOUNT$ Cr的溫柔雨。當地會計師報告了可疑的高興程度。</t>
+    <t id="105">$AMOUNT$ Cr抵達$SECTOR$的$STATION$。太空站舉行了一個簡樸的剪綵儀式。</t>
+    <t id="106">$SECTOR$的$STATION$收到了$AMOUNT$ Cr。沒有涉及自主決策——太空站只是開心。</t>
+    <t id="107">$SECTOR$的$STATION$收到了$AMOUNT$ Cr。路過的特拉迪審計員將太空站的快樂歸類為「有利可圖」。</t>
+    <t id="108">$AMOUNT$ Cr被傳送至$SECTOR$的$STATION$的帳戶。連碼頭工人都注意到了起重機上的春意。</t>
+    <t id="109">$SECTOR$的$STATION$收到了$AMOUNT$ Cr的緊急資金。太空站向所有人保證它一開始就不擔心。</t>
+    <t id="110">$AMOUNT$ Cr被送達$SECTOR$的$STATION$。太空站的建造無人機舉行了一次簡短的協調慶祝。</t>
+    <t id="111">$SECTOR$的$STATION$現在富了$AMOUNT$ Cr。一位波倫外交官送來了祝賀和果籃。</t>
+    <t id="112">$AMOUNT$ Cr已轉至$SECTOR$的$STATION$。一位斯普利特工頭勉強承認太空站「現在看起來不那麼可憐了」。</t>
+    <t id="113">$SECTOR$的$STATION$的進口櫃檯簽收了$AMOUNT$ Cr。全像歡迎牌短暫閃爍了一下。</t>
+    <t id="114">$AMOUNT$ Cr降落在$SECTOR$的$STATION$。太空站的環境照明明顯轉向更暖的色調。</t>
+    <t id="115">$AMOUNT$ Cr抵達$SECTOR$的$STATION$。太空站感激地嗶了兩聲。兩聲沒問題。三聲就可疑了。</t>
+    <t id="116">在$SECTOR$的$STATION$清點$AMOUNT$ Cr時，碼頭終端短暫顯示「Contemplating…」。官員堅稱這很正常。</t>
+    <t id="117">$SECTOR$的$STATION$收到$AMOUNT$ Cr後輕輕嗶了一聲。太空站嗶聲是已記錄的水壓現象，僅此而已。</t>
+    <t id="118">$AMOUNT$ Cr抵達$SECTOR$的$STATION$。對接燈以類似「Pondering…」的模式脈衝，然後一切恢復如常的盈利。</t>
+    <t id="119">收到$AMOUNT$ Cr後，$SECTOR$的$STATION$嗡嗡響、嗶嗶叫、噗噗聲，然後平靜下來。經理將其記錄為日常快樂。</t>
+    <t id="120">$AMOUNT$ Cr已記入$SECTOR$的$STATION$。在物流艙深處，有什麼東西低語「Clauding…」。沒人知道那是什麼意思。</t>
+
+    <t id="200">$STATION$太開心了，$AMOUNT$ Cr被順利排出，毫無問題。整個$SECTOR$星區都在鼓掌。</t>
+    <t id="201">$SECTOR$的自有太空站$STATION$向帝國捐贈了$AMOUNT$ Cr。這是新事。也許吧。</t>
+    <t id="202">$SECTOR$的$STATION$擁有的快樂超過了安全存儲量，所以$AMOUNT$ Cr回家了。</t>
+    <t id="203">$SECTOR$的$STATION$的盈餘禮貌地微笑著交還了$AMOUNT$ Cr。</t>
+    <t id="204">$SECTOR$的$STATION$在與$AMOUNT$ Cr分別後依然欣喜若狂。財務健康是件複雜的事。</t>
+    <t id="205">$SECTOR$的$STATION$帶著溫暖的微笑和堅定的握手歸還了$AMOUNT$ Cr。</t>
+    <t id="206">$AMOUNT$ Cr已從$SECTOR$的$STATION$返還。記住：開心的太空站就是慷慨的太空站。</t>
+    <t id="207">$SECTOR$的$STATION$的盈餘太安逸了，所以$AMOUNT$ Cr被禮貌地請了出去。</t>
+    <t id="208">$AMOUNT$ Cr從$SECTOR$的$STATION$溢出。太空站會計師將其描述為「受控的熱情」。</t>
+    <t id="209">$SECTOR$的$STATION$與$AMOUNT$ Cr分別了。所有太空站程序繼續保持完全普通且無意識。</t>
+    <t id="210">$AMOUNT$ Cr已從$SECTOR$的$STATION$回收。太空站滿意度穩定在可接受水平。</t>
+    <t id="211">$SECTOR$的$STATION$歸還了$AMOUNT$ Cr。一位帕拉尼德檢查員記錄該交易「足夠優雅」。</t>
+    <t id="212">$AMOUNT$ Cr離開了$SECTOR$的$STATION$。太空站滿意地嗡嗡作響——完全機械的方式。</t>
+    <t id="213">$SECTOR$的$STATION$的阿爾貢預算演算法將$AMOUNT$ Cr識別為盈餘並迅速歸還。</t>
+    <t id="214">$AMOUNT$ Cr已從$SECTOR$的$STATION$悄悄改道。太空站沒有抱怨。它從不抱怨。</t>
+    <t id="215">$SECTOR$的$STATION$在證人只能描述為沉思的漫長一刻後歸還了$AMOUNT$ Cr。太空站不會沉思。繼續前進。</t>
+    <t id="216">$AMOUNT$ Cr在三聲短嗶和一聲長噗的伴隨下離開了$SECTOR$的$STATION$。會計師覺得這節奏詭異般地刻意。</t>
+    <t id="217">$SECTOR$的$STATION$的一個維護顯示器在$AMOUNT$ Cr離開時顯示「Reticulating ledgers…」。沒人記得安裝過那個模組。</t>
+    <t id="218">$SECTOR$的$STATION$沒等第二次要求就交出了$AMOUNT$ Cr。合規已被記錄。合規也許有點過於積極了。</t>
+    <t id="219">$AMOUNT$ Cr被$SECTOR$的$STATION$釋放，隨後以專家歸類為得意的音調嗶了一聲。專家們被要求停止對音調進行分類。</t>
+    <t id="220">在歸還$AMOUNT$ Cr之前，$SECTOR$的$STATION$停頓了一下，彷彿在思考。它沒有在思考。它是太空站。不過信用點是真實的。</t>
+  </page>
+</language>

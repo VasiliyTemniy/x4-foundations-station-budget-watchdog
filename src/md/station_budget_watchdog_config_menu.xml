@@ -1,0 +1,670 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mdscript name="VAS_StationBudgetWatchdog_Config"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="md.xsd">
+  <cues>
+    <!--@doc
+        Idempotent defaults seeder: per-tag target list, feature toggles, menu
+        scratch state and tuning knobs. All state lives on player.entity (the
+        core watchdog script reads it there). String-coercion null checks:
+        explicit false/0 must NOT be re-seeded; saved/edited values persist. -->
+    <library name="SeedDefaults" purpose="run_actions">
+      <actions>
+        <do_if value="not @player.entity.$vas_sbw_targets">
+          <set_value name="player.entity.$vas_sbw_targets" exact="[
+            table[$tag = '[AB5]',  $target = 5000000Cr],
+            table[$tag = '[AB10]', $target = 10000000Cr],
+            table[$tag = '[AB20]', $target = 20000000Cr],
+            table[$tag = '[AB40]', $target = 40000000Cr],
+          ]"/>
+        </do_if>
+        <do_if value="not @player.entity.$vas_sbw_newtag">
+          <set_value name="player.entity.$vas_sbw_newtag" exact="''"/>
+        </do_if>
+        <do_if value="not @player.entity.$vas_sbw_newtargetm">
+          <set_value name="player.entity.$vas_sbw_newtargetm" exact="5"/>
+        </do_if>
+        <do_if value="(@player.entity.$vas_sbw_topup_enabled + '') == 'null'">
+          <set_value name="player.entity.$vas_sbw_topup_enabled" exact="true"/>
+        </do_if>
+        <do_if value="(@player.entity.$vas_sbw_drain_enabled + '') == 'null'">
+          <set_value name="player.entity.$vas_sbw_drain_enabled" exact="true"/>
+        </do_if>
+        <do_if value="(@player.entity.$vas_sbw_use_vanilla_budget + '') == 'null'">
+          <set_value name="player.entity.$vas_sbw_use_vanilla_budget" exact="false"/>
+        </do_if>
+        <do_if value="(@player.entity.$vas_sbw_handle_all_stations + '') == 'null'">
+          <set_value name="player.entity.$vas_sbw_handle_all_stations" exact="false"/>
+        </do_if>
+        <do_if value="(@player.entity.$vas_sbw_use_happy_station_texts + '') == 'null'">
+          <set_value name="player.entity.$vas_sbw_use_happy_station_texts" exact="false"/>
+        </do_if>
+        <do_if value="(@player.entity.$vas_sbw_debug_enabled + '') == 'null'">
+          <set_value name="player.entity.$vas_sbw_debug_enabled" exact="false"/>
+        </do_if>
+        <do_if value="(@player.entity.$vas_sbw_check_interval + '') == 'null'">
+          <set_value name="player.entity.$vas_sbw_check_interval" exact="30"/>
+        </do_if>
+        <do_if value="(@player.entity.$vas_sbw_min_transfer_m + '') == 'null'">
+          <set_value name="player.entity.$vas_sbw_min_transfer_m" exact="1"/>
+        </do_if>
+        <do_if value="(@player.entity.$vas_sbw_keep_player_m + '') == 'null'">
+          <set_value name="player.entity.$vas_sbw_keep_player_m" exact="20"/>
+        </do_if>
+        <do_if value="(@player.entity.$vas_sbw_grant_pct + '') == 'null'">
+          <set_value name="player.entity.$vas_sbw_grant_pct" exact="200"/>
+        </do_if>
+        <do_if value="(@player.entity.$vas_sbw_drain_check_pct + '') == 'null'">
+          <set_value name="player.entity.$vas_sbw_drain_check_pct" exact="300"/>
+        </do_if>
+        <do_if value="(@player.entity.$vas_sbw_drain_leave_pct + '') == 'null'">
+          <set_value name="player.entity.$vas_sbw_drain_leave_pct" exact="150"/>
+        </do_if>
+      </actions>
+    </library>
+
+    <!-- event_universe_generated fires both at new-game start AND on every
+         savegame load (md.xsd), so it alone covers all sessions. instantiate,
+         not a plain cue: a plain cue would complete on its first-ever event
+         and never seed again in that playthrough. -->
+    <cue name="InitDefaults" instantiate="true">
+      <conditions>
+        <event_universe_generated/>
+      </conditions>
+      <actions>
+        <run_actions ref="SeedDefaults"/>
+      </actions>
+    </cue>
+
+    <!--@doc
+        True if $Tag would clash with any tag already in $List under our substring
+        match - i.e. either is a substring of the other (e.g. "[AB5]" inside "[AB5]0]").
+        The Add handler calls this and rejects the new tag on a clash.
+        Params: Tag - candidate tag string;  List - the targets list (table[$tag,...]).
+        Returns: bool. -->
+    <library name="TagClashes" purpose="run_actions">
+      <params>
+        <param name="Tag"/>
+        <param name="List" default="[]"/>
+      </params>
+      <actions>
+        <set_value name="$clash" exact="false"/>
+        <do_for_each name="$e" in="$List">
+          <set_value name="$a" exact="$Tag"/>
+          <substitute_text text="$a"><replace string="$e.$tag" with="''"/></substitute_text>
+          <set_value name="$b" exact="$e.$tag"/>
+          <substitute_text text="$b"><replace string="$Tag" with="''"/></substitute_text>
+          <do_if value="$a != $Tag or $b != $e.$tag">
+            <set_value name="$clash" exact="true"/>
+            <break/>
+          </do_if>
+        </do_for_each>
+        <return value="$clash"/>
+      </actions>
+    </library>
+
+    <!-- Register the config editor in Extension Options. -->
+    <cue name="Register_Options_Menu" instantiate="true">
+      <conditions>
+        <event_cue_signalled cue="md.Simple_Menu_Options.Reloaded"/>
+      </conditions>
+      <actions>
+        <signal_cue_instantly cue="md.Simple_Menu_API.Register_Options_Menu" param="table[
+          $id = 'vas_sbw_options_menu',
+          $columns = 4,
+          $title = {202600608,10},
+          $onOpen = BuildWatchdogMenu,
+        ]"/>
+        <reset_cue cue="this"/>
+      </actions>
+    </cue>
+
+    <!-- Populate the options menu: existing tag->target rows (each with Remove),
+         then a "new entry" row (tag editbox + target slider in millions + Add). -->
+    <cue name="BuildWatchdogMenu" instantiate="true">
+      <conditions>
+        <event_cue_signalled/>
+      </conditions>
+      <actions>
+        <!-- Defensive re-seed: cheap, idempotent, and covers any menu open that
+             somehow precedes InitDefaults. -->
+        <run_actions ref="SeedDefaults"/>
+        <set_value name="$statusText" exact="if @player.entity.$vas_sbw_status_text then player.entity.$vas_sbw_status_text else ''"/>
+        <set_value name="$statusColor" exact="if @player.entity.$vas_sbw_status_color then player.entity.$vas_sbw_status_color else 'Color.text_normal'"/>
+
+        <signal_cue_instantly cue="md.Simple_Menu_API.Call_Table_Method" param="table[
+          $method = 'setColWidth',
+          $col = 1,
+          $width = 'Helper.standardButtonHeight',
+        ]"/>
+
+        <!-- Header text -->
+        <!-- Overall mechanics description -->
+        <signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[$selectable = false]"/>
+        <signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+          $col = 1,
+          $colSpan = 4,
+          $text = {202600608,30}
+        ]"/>
+        <signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[$selectable = false]"/>
+        <signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+          $col = 1,
+          $colSpan = 4,
+          $text = {202600608,31}
+        ]"/>
+
+        <!-- Small spacer -->
+        <signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[$selectable = false]"/>
+        <signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+          $col = 1,
+          $colSpan = 4,
+          $id = 'vas_sbw_header_spacer1',
+          $text = '',
+          $height = 10,
+          $fontsize = 1,
+        ]"/>
+
+        <!-- Lines about Happy Station reproduction -->
+        <signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[$selectable = false]"/>
+        <signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+          $col = 1,
+          $colSpan = 4,
+          $text = {202600608,32}
+        ]"/>
+        <signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[$selectable = false]"/>
+        <signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+          $col = 1,
+          $colSpan = 4,
+          $text = {202600608,33}
+        ]"/>
+
+        <!-- Small spacer -->
+        <signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[$selectable = false]"/>
+        <signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+          $col = 1,
+          $colSpan = 4,
+          $id = 'vas_sbw_header_spacer2',
+          $text = '',
+          $height = 10,
+          $fontsize = 1,
+        ]"/>
+
+        <!-- Lines about percentages and triggers -->
+        <signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[$selectable = false]"/>
+        <signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+          $col = 1,
+          $colSpan = 4,
+          $text = {202600608,34}
+        ]"/>
+        <signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[$selectable = false]"/>
+        <signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+          $col = 1,
+          $colSpan = 4,
+          $text = {202600608,35}
+        ]"/>
+
+        <!-- Spacer -->
+        <signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[$selectable = false]"/>
+        <signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+          $col = 1,
+          $colSpan = 4,
+          $id = 'vas_sbw_newtag_spacer1',
+          $text = '',
+          $halign = 'left',
+        ]"/>
+
+        <!-- Topup enabled checkbox -->
+        <signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[]"/>
+        <signal_cue_instantly cue="md.Simple_Menu_API.Make_CheckBox" param="table[
+          $col = 1,
+          $id = 'vas_sbw_topup_enabled',
+          $echo = 'vas_sbw_topup_enabled',
+          $checked = player.entity.$vas_sbw_topup_enabled,
+          $width = 'Helper.standardButtonHeight',
+          $height = 'Helper.standardButtonHeight',
+          $onClick = OnToggleChanged,
+        ]"/>
+        <signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 2, $colSpan = 3, $text = {202600608,16}, $halign = 'left']"/>
+
+        <!-- Drain enabled checkbox -->
+        <signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[]"/>
+        <signal_cue_instantly cue="md.Simple_Menu_API.Make_CheckBox" param="table[
+          $col = 1,
+          $id = 'vas_sbw_drain_enabled',
+          $echo = 'vas_sbw_drain_enabled',
+          $checked = player.entity.$vas_sbw_drain_enabled,
+          $width = 'Helper.standardButtonHeight',
+          $height = 'Helper.standardButtonHeight',
+          $onClick = OnToggleChanged,
+        ]"/>
+        <signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 2, $colSpan = 3, $text = {202600608,17}, $halign = 'left']"/>
+
+        <!-- Vanilla budget checkbox -->
+        <signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[]"/>
+        <signal_cue_instantly cue="md.Simple_Menu_API.Make_CheckBox" param="table[
+          $col = 1,
+          $id = 'vas_sbw_use_vanilla_budget',
+          $echo = 'vas_sbw_use_vanilla_budget',
+          $checked = player.entity.$vas_sbw_use_vanilla_budget or player.entity.$vas_sbw_handle_all_stations,
+          $active = not player.entity.$vas_sbw_handle_all_stations,
+          $width = 'Helper.standardButtonHeight',
+          $height = 'Helper.standardButtonHeight',
+          $onClick = OnUseVanillaBudgetChanged,
+        ]"/>
+        <signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 2, $colSpan = 3, $text = {202600608,19}, $halign = 'left']"/>
+
+        <!-- HappyStation-style all-stations checkbox -->
+        <signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[]"/>
+        <signal_cue_instantly cue="md.Simple_Menu_API.Make_CheckBox" param="table[
+          $col = 1,
+          $id = 'vas_sbw_handle_all_stations',
+          $echo = 'vas_sbw_handle_all_stations',
+          $checked = player.entity.$vas_sbw_handle_all_stations,
+          $width = 'Helper.standardButtonHeight',
+          $height = 'Helper.standardButtonHeight',
+          $onClick = OnHandleAllStationsChanged,
+        ]"/>
+        <signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 2, $colSpan = 3, $text = {202600608,25}, $halign = 'left']"/>
+
+        <!-- Easter egg HappyStation texts checkbox -->
+        <signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[]"/>
+        <signal_cue_instantly cue="md.Simple_Menu_API.Make_CheckBox" param="table[
+          $col = 1,
+          $id = 'vas_sbw_use_happy_station_texts',
+          $echo = 'vas_sbw_use_happy_station_texts',
+          $checked = player.entity.$vas_sbw_use_happy_station_texts,
+          $width = 'Helper.standardButtonHeight',
+          $height = 'Helper.standardButtonHeight',
+          $onClick = OnToggleChanged,
+        ]"/>
+        <signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 2, $colSpan = 3, $text = {202600608,18}, $halign = 'left']"/>
+
+        <!-- Debug logging checkbox -->
+        <signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[]"/>
+        <signal_cue_instantly cue="md.Simple_Menu_API.Make_CheckBox" param="table[
+          $col = 1,
+          $id = 'vas_sbw_debug_enabled',
+          $echo = 'vas_sbw_debug_enabled',
+          $checked = player.entity.$vas_sbw_debug_enabled,
+          $width = 'Helper.standardButtonHeight',
+          $height = 'Helper.standardButtonHeight',
+          $onClick = OnToggleChanged,
+        ]"/>
+        <signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 2, $colSpan = 3, $text = {202600608,24}, $halign = 'left']"/>
+
+        <!-- Spacer -->
+        <signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[$selectable = false]"/>
+        <signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+          $col = 1,
+          $colSpan = 4,
+          $id = 'vas_sbw_tuning_spacer2',
+          $text = '',
+          $halign = 'left',
+        ]"/>
+
+        <!-- Tuning sliders: poll cadence, transfer floor, and the three clamp levels -->
+        <signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[]"/>
+        <signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 2, $text = {202600608,40}, $halign = 'left']"/>
+        <signal_cue_instantly cue="md.Simple_Menu_API.Make_Slider" param="table[
+          $col = 3,
+          $colSpan = 2,
+          $id = 'vas_sbw_check_interval',
+          $echo = 'vas_sbw_check_interval',
+          $min = 10,
+          $max = 600,
+          $step = 10,
+          $height = 'Helper.slidercellMinHeight',
+          $start = player.entity.$vas_sbw_check_interval,
+          $suffix = ' s',
+          $onSliderCellConfirm = OnTuningChanged,
+        ]"/>
+
+        <signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[]"/>
+        <signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 2, $text = {202600608,41}, $halign = 'left']"/>
+        <signal_cue_instantly cue="md.Simple_Menu_API.Make_Slider" param="table[
+          $col = 3,
+          $colSpan = 2,
+          $id = 'vas_sbw_min_transfer_m',
+          $echo = 'vas_sbw_min_transfer_m',
+          $min = 0,
+          $max = 10,
+          $step = 1,
+          $height = 'Helper.slidercellMinHeight',
+          $start = player.entity.$vas_sbw_min_transfer_m,
+          $suffix = ' M Cr',
+          $onSliderCellConfirm = OnTuningChanged,
+        ]"/>
+
+        <signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[]"/>
+        <signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 2, $text = {202600608,45}, $halign = 'left']"/>
+        <signal_cue_instantly cue="md.Simple_Menu_API.Make_Slider" param="table[
+          $col = 3,
+          $colSpan = 2,
+          $id = 'vas_sbw_keep_player_m',
+          $echo = 'vas_sbw_keep_player_m',
+          $min = 0,
+          $max = 500,
+          $step = 5,
+          $height = 'Helper.slidercellMinHeight',
+          $start = player.entity.$vas_sbw_keep_player_m,
+          $suffix = ' M Cr',
+          $onSliderCellConfirm = OnTuningChanged,
+        ]"/>
+
+        <signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[]"/>
+        <signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 2, $text = {202600608,42}, $halign = 'left']"/>
+        <signal_cue_instantly cue="md.Simple_Menu_API.Make_Slider" param="table[
+          $col = 3,
+          $colSpan = 2,
+          $id = 'vas_sbw_grant_pct',
+          $echo = 'vas_sbw_grant_pct',
+          $min = 100,
+          $max = 300,
+          $step = 25,
+          $height = 'Helper.slidercellMinHeight',
+          $start = player.entity.$vas_sbw_grant_pct,
+          $suffix = ' %',
+          $onSliderCellConfirm = OnTuningChanged,
+        ]"/>
+
+        <signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[]"/>
+        <signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 2, $text = {202600608,43}, $halign = 'left']"/>
+        <signal_cue_instantly cue="md.Simple_Menu_API.Make_Slider" param="table[
+          $col = 3,
+          $colSpan = 2,
+          $id = 'vas_sbw_drain_check_pct',
+          $echo = 'vas_sbw_drain_check_pct',
+          $min = 150,
+          $max = 1000,
+          $step = 25,
+          $height = 'Helper.slidercellMinHeight',
+          $start = player.entity.$vas_sbw_drain_check_pct,
+          $suffix = ' %',
+          $onSliderCellConfirm = OnTuningChanged,
+        ]"/>
+
+        <signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[]"/>
+        <signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 2, $text = {202600608,44}, $halign = 'left']"/>
+        <signal_cue_instantly cue="md.Simple_Menu_API.Make_Slider" param="table[
+          $col = 3,
+          $colSpan = 2,
+          $id = 'vas_sbw_drain_leave_pct',
+          $echo = 'vas_sbw_drain_leave_pct',
+          $min = 100,
+          $max = 500,
+          $step = 25,
+          $height = 'Helper.slidercellMinHeight',
+          $start = player.entity.$vas_sbw_drain_leave_pct,
+          $suffix = ' %',
+          $onSliderCellConfirm = OnTuningChanged,
+        ]"/>
+
+        <!-- Spacer -->
+        <signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[$selectable = false]"/>
+        <signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+          $col = 1,
+          $colSpan = 4,
+          $id = 'vas_sbw_newtag_spacer3',
+          $text = '',
+          $halign = 'left',
+        ]"/>
+
+        <!-- The whole tag editor is inert while all-stations mode is on (the
+             core resolves every station to its vanilla budget and never reads
+             the tag list), so grey it out without removing anything. -->
+        <set_value name="$tagsActive" exact="not player.entity.$vas_sbw_handle_all_stations"/>
+        <set_value name="$tagTextColor" exact="if player.entity.$vas_sbw_handle_all_stations then 'Color.text_inactive' else 'Color.text_normal'"/>
+
+        <!-- All the existing tags -->
+        <do_for_each name="$e" in="player.entity.$vas_sbw_targets">
+          <signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[]"/>
+          <signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 2, $text = $e.$tag, $color = $tagTextColor]"/>
+          <signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 3, $text = $e.$target.formatted.default + ' Cr', $color = $tagTextColor]"/>
+          <signal_cue_instantly cue="md.Simple_Menu_API.Make_Button" param="table[
+            $col = 4,
+            $id = 'vas_sbw_rm_' + $e.$tag,
+            $echo = $e.$tag,
+            $text = table[$text = {202600608,12}, $halign = 'center'],
+            $active = $tagsActive,
+            $onClick = OnRemoveTag,
+          ]"/>
+        </do_for_each>
+
+        <!-- Some text that shows what's going on. Empty most of the time -->
+        <signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[$selectable = false]"/>
+        <signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+          $col = 1,
+          $colSpan = 4,
+          $id = 'vas_sbw_status',
+          $text = $statusText,
+          $color = $statusColor,
+          $halign = 'left',
+        ]"/>
+
+        <!-- Add new tag: 1 row textbox, 1 row target budget slider, 1 row button.
+             Greyed out together with the tag list while all-stations mode is on. -->
+        <signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[]"/>
+        <signal_cue_instantly cue="md.Simple_Menu_API.Make_EditBox" param="table[
+          $col = 1,
+          $colSpan = 4,
+          $id = 'vas_sbw_newtag',
+          $height = 'Helper.standardButtonHeight',
+          $defaultText = if player.entity.$vas_sbw_newtag != '' then player.entity.$vas_sbw_newtag else {202600608,13},
+          $active = $tagsActive,
+          $onTextChanged = OnNewTagChanged,
+          $onEditBoxDeactivated = OnNewTagChanged,
+        ]"/>
+        <signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[]"/>
+        <signal_cue_instantly cue="md.Simple_Menu_API.Make_Slider" param="table[
+          $col = 1,
+          $colSpan = 4,
+          $id = 'vas_sbw_newtarget',
+          $min = 1,
+          $max = 500,
+          $step = 1,
+          $height = 'Helper.slidercellMinHeight',
+          $start = player.entity.$vas_sbw_newtargetm,
+          $suffix = ' M Cr',
+          $active = $tagsActive,
+          $onSliderCellConfirm = OnNewTargetChanged,
+        ]"/>
+        <signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[]"/>
+        <signal_cue_instantly cue="md.Simple_Menu_API.Make_Button" param="table[
+          $col = 1,
+          $colSpan = 4,
+          $id = 'vas_sbw_add',
+          $text = table[$text = {202600608,15}, $halign = 'center'],
+          $active = $tagsActive,
+          $onClick = OnAddTag,
+        ]"/>
+        <reset_cue cue="this"/>
+      </actions>
+    </cue>
+
+    <cue name="ShowStatus" instantiate="true">
+      <conditions>
+        <event_cue_signalled/>
+      </conditions>
+      <actions>
+        <do_if value="not @player.entity.$vas_sbw_status_token">
+          <set_value name="player.entity.$vas_sbw_status_token" exact="0"/>
+        </do_if>
+        <set_value name="player.entity.$vas_sbw_status_token" operation="add"/>
+        <set_value name="$token" exact="player.entity.$vas_sbw_status_token"/>
+        <set_value name="$text" exact="event.param.$text"/>
+        <set_value name="$color" exact="if @event.param.$color then event.param.$color else 'Color.text_normal'"/>
+        <set_value name="player.entity.$vas_sbw_status_text" exact="$text"/>
+        <set_value name="player.entity.$vas_sbw_status_color" exact="$color"/>
+        <signal_cue_instantly cue="md.Simple_Menu_API.Update_Widget" param="table[
+          $id = 'vas_sbw_status',
+          $text = $text,
+          $color = $color,
+        ]"/>
+        <do_if value="not @event.param.$keep">
+          <set_value name="player.entity.$vas_sbw_status_clear_token" exact="$token"/>
+          <raise_lua_event name="'Time.setAlarm'" param="'vas_sbw_status_clear:3'"/>
+        </do_if>
+        <reset_cue cue="this"/>
+      </actions>
+    </cue>
+
+    <cue name="ClearStatusAfterDelay" instantiate="true">
+      <conditions>
+        <event_ui_triggered screen="'Time'" control="'vas_sbw_status_clear'"/>
+      </conditions>
+      <actions>
+        <do_if value="player.entity.$vas_sbw_status_token == player.entity.$vas_sbw_status_clear_token">
+          <set_value name="player.entity.$vas_sbw_status_text" exact="''"/>
+          <set_value name="player.entity.$vas_sbw_status_color" exact="'Color.text_normal'"/>
+          <signal_cue_instantly cue="md.Simple_Menu_API.Update_Widget" param="table[
+            $id = 'vas_sbw_status',
+            $text = '',
+            $color = 'Color.text_normal',
+          ]"/>
+          <signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
+        </do_if>
+        <remove_value name="player.entity.$vas_sbw_status_clear_token"/>
+        <reset_cue cue="this"/>
+      </actions>
+    </cue>
+
+    <cue name="OnToggleChanged" instantiate="true">
+      <conditions>
+        <event_cue_signalled/>
+      </conditions>
+      <actions>
+        <set_value name="$key" exact="@event.param.$echo"/>
+        <do_if value="$key == 'vas_sbw_topup_enabled' or $key == 'vas_sbw_drain_enabled' or $key == 'vas_sbw_use_happy_station_texts' or $key == 'vas_sbw_debug_enabled'">
+          <set_value name="player.entity.{'$' + $key}" exact="if event.param.$checked then true else false"/>
+        </do_if>
+        <reset_cue cue="this"/>
+      </actions>
+    </cue>
+
+    <cue name="OnUseVanillaBudgetChanged" instantiate="true">
+      <conditions>
+        <event_cue_signalled/>
+      </conditions>
+      <actions>
+        <do_if value="not @player.entity.$vas_sbw_handle_all_stations">
+          <set_value name="player.entity.$vas_sbw_use_vanilla_budget" exact="if event.param.$checked then true else false"/>
+        </do_if>
+        <reset_cue cue="this"/>
+      </actions>
+    </cue>
+
+    <cue name="OnHandleAllStationsChanged" instantiate="true">
+      <conditions>
+        <event_cue_signalled/>
+      </conditions>
+      <actions>
+        <set_value name="player.entity.$vas_sbw_handle_all_stations" exact="if event.param.$checked then true else false"/>
+        <!-- Just rerender the menu to make the use_vanilla_budget checkbox inactive -->
+        <signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
+        <reset_cue cue="this"/>
+      </actions>
+    </cue>
+
+    <!-- One handler for all five tuning sliders; the echo names the entity var. -->
+    <cue name="OnTuningChanged" instantiate="true">
+      <conditions>
+        <event_cue_signalled/>
+      </conditions>
+      <actions>
+        <set_value name="$key" exact="@event.param.$echo"/>
+        <do_if value="$key == 'vas_sbw_check_interval' or $key == 'vas_sbw_min_transfer_m' or $key == 'vas_sbw_keep_player_m' or $key == 'vas_sbw_grant_pct' or $key == 'vas_sbw_drain_check_pct' or $key == 'vas_sbw_drain_leave_pct'">
+          <set_value name="player.entity.{'$' + $key}" exact="event.param.$value"/>
+        </do_if>
+        <reset_cue cue="this"/>
+      </actions>
+    </cue>
+
+    <cue name="OnNewTagChanged" instantiate="true">
+      <conditions>
+        <event_cue_signalled/>
+      </conditions>
+      <actions>
+        <do_if value="@player.entity.$vas_sbw_ignore_next_newtag_deactivate and event.param.$event == 'onEditBoxDeactivated'">
+          <set_value name="player.entity.$vas_sbw_ignore_next_newtag_deactivate" exact="false"/>
+        </do_if>
+        <do_else>
+          <set_value name="player.entity.$vas_sbw_newtag" exact="event.param.$text"/>
+        </do_else>
+        <reset_cue cue="this"/>
+      </actions>
+    </cue>
+
+    <cue name="OnNewTargetChanged" instantiate="true">
+      <conditions>
+        <event_cue_signalled/>
+      </conditions>
+      <actions>
+        <set_value name="player.entity.$vas_sbw_newtargetm" exact="event.param.$value"/>
+        <reset_cue cue="this"/>
+      </actions>
+    </cue>
+
+    <cue name="OnAddTag" instantiate="true">
+      <conditions>
+        <event_cue_signalled/>
+      </conditions>
+      <actions>
+        <do_if value="not @player.entity.$vas_sbw_targets">
+          <set_value name="player.entity.$vas_sbw_targets" exact="[]"/>
+        </do_if>
+        <set_value name="$tag" exact="player.entity.$vas_sbw_newtag"/>
+        <run_actions ref="TagClashes" result="$clash">
+          <param name="Tag" value="$tag"/>
+          <param name="List" value="player.entity.$vas_sbw_targets"/>
+        </run_actions>
+        <do_if value="$tag == ''">
+          <signal_cue_instantly cue="ShowStatus" param="table[
+            $text = {202600608,20},
+            $color = 'Color.text_negative',
+          ]"/>
+        </do_if>
+        <do_elseif value="$clash">
+          <signal_cue_instantly cue="ShowStatus" param="table[
+            $text = {202600608,21},
+            $color = 'Color.text_negative',
+          ]"/>
+        </do_elseif>
+        <do_else>
+          <append_to_list name="player.entity.$vas_sbw_targets" exact="table[
+            $tag = $tag,
+            $target = player.entity.$vas_sbw_newtargetm * 1000000Cr,
+          ]"/>
+          <set_value name="player.entity.$vas_sbw_ignore_next_newtag_deactivate" exact="true"/>
+          <set_value name="player.entity.$vas_sbw_newtag" exact="''"/>
+          <signal_cue_instantly cue="ShowStatus" param="table[
+            $text = {202600608,22},
+            $color = 'Color.text_positive',
+          ]"/>
+          <signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
+        </do_else>
+        <reset_cue cue="this"/>
+      </actions>
+    </cue>
+
+    <cue name="OnRemoveTag" instantiate="true">
+      <conditions>
+        <event_cue_signalled/>
+      </conditions>
+      <actions>
+        <set_value name="$tag" exact="@event.param.$echo"/>
+        <do_if value="@player.entity.$vas_sbw_targets and @$tag">
+          <do_for_each name="$e" in="player.entity.$vas_sbw_targets" reverse="true">
+            <do_if value="$e.$tag == $tag">
+              <remove_from_list name="player.entity.$vas_sbw_targets" exact="$e"/>
+              <signal_cue_instantly cue="ShowStatus" param="table[
+                $text = {202600608,23},
+                $color = 'Color.text_positive',
+              ]"/>
+            </do_if>
+          </do_for_each>
+        </do_if>
+        <signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
+        <reset_cue cue="this"/>
+      </actions>
+    </cue>
+  </cues>
+</mdscript>

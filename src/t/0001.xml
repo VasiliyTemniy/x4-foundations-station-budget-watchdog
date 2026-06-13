@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<language>
+  <page id="202600608" title="Station Budget Watchdog" voice="no">
+    <!-- Notifications and logbook -->
+    <t id="1">$STATION$ in $SECTOR$ was granted $AMOUNT$ Cr to address a production deficit. New balance is $MONEY$ Cr.</t>
+    <t id="2">Station Budget Watchdog</t>
+    <t id="3">$STATION$ in $SECTOR$ returned $AMOUNT$ Cr due to surplus. New balance is $MONEY$ Cr.</t>
+    <t id="4">Station Made Happy</t>
+    <t id="5">Station Budget Watchdog could not afford a top-up for $STATION$ in $SECTOR$. Empire funds are running low.</t>
+
+    <!-- Extension options -->
+    <t id="10">Station Budget Watchdog</t>
+    <t id="12">Remove</t>
+    <t id="13">e.g. [QT57]</t>
+    <t id="15">Add</t>
+    <t id="16">Top-up to fill target</t>
+    <t id="17">Drain surplus</t>
+    <t id="18">Make station happy *</t>
+    <t id="19">Use vanilla station planned budget instead of tag-based</t>
+    <t id="20">Enter a station tag first.</t>
+    <t id="21">This tag overlaps an existing budget tag. Use unique markers.</t>
+    <t id="22">Budget tag added.</t>
+    <t id="23">Budget tag removed.</t>
+    <t id="24">Debug logging</t>
+    <t id="25">Ignore tag system and handle all player stations</t>
+
+    <!-- Tuning slider labels -->
+    <t id="40">Check interval</t>
+    <t id="41">Minimum transfer</t>
+    <t id="42">Top-up fill level</t>
+    <t id="43">Drain trigger level</t>
+    <t id="44">Drain leave level</t>
+    <t id="45">Minimum kept player money</t>
+
+    <!-- Header -->
+    <t id="30">Tag station names like [QT57], then set the target budget for that tag.</t>
+    <t id="31">Tagged stations are kept near their target; untagged stations are ignored.</t>
+    <t id="32">For HappyStation behavior: enable all-stations mode, disable Drain surplus,</t>
+    <t id="33">set Minimum transfer and Minimum kept player money to 0, keep top-up enabled.</t>
+    <t id="34">Levels below are percentages of the target budget.</t>
+    <t id="35">Top-up fires below 100 percent, drain above the trigger.</t>
+
+    <!-- Easter egg grant log templates. Reserved ids: 100-199.
+         The picker in WriteTransferLog currently rolls 100-120 - keep in sync. -->
+    <t id="100">$AMOUNT$ Cr were granted to station $STATION$ in $SECTOR$. The station glows and shines.</t>
+    <t id="101">The station $STATION$ in $SECTOR$ has received $AMOUNT$ Cr. Nobody has seen a happier station.</t>
+    <t id="102">Station $STATION$ in $SECTOR$ was made very, really, unfathomably happy. $AMOUNT$ Cr is no joke.</t>
+    <t id="103">$STATION$ in $SECTOR$ just found $AMOUNT$ Cr under the sofa cushions of empire logistics. Joy protocols engaged.</t>
+    <t id="104">A gentle rain of $AMOUNT$ Cr fell upon $STATION$ in $SECTOR$. Local accountants report suspicious levels of cheer.</t>
+    <t id="105">$AMOUNT$ Cr arrived at $STATION$ in $SECTOR$. The station held a modest ribbon-cutting ceremony.</t>
+    <t id="106">$STATION$ in $SECTOR$ received $AMOUNT$ Cr. No autonomous decision-making was involved — the station is simply happy.</t>
+    <t id="107">$STATION$ in $SECTOR$ received $AMOUNT$ Cr. A passing Teladi auditor classified the station's joy as "profitable."</t>
+    <t id="108">$AMOUNT$ Cr were beamed into the accounts of $STATION$ in $SECTOR$. Even the dockworkers noticed the spring in the cranes.</t>
+    <t id="109">Emergency funds of $AMOUNT$ Cr reached $STATION$ in $SECTOR$. The station assured everyone it wasn't worried in the first place.</t>
+    <t id="110">$AMOUNT$ Cr were delivered to $STATION$ in $SECTOR$. The station's construction drones held a brief coordinated celebration.</t>
+    <t id="111">$STATION$ in $SECTOR$ is now $AMOUNT$ Cr richer. A Boron diplomat sent congratulations and a fruit basket.</t>
+    <t id="112">$AMOUNT$ Cr transferred to $STATION$ in $SECTOR$. A Split foreman grudgingly admitted the station "seems less pathetic now."</t>
+    <t id="113">The import desk at $STATION$ in $SECTOR$ signed for $AMOUNT$ Cr. The holographic welcome sign flickered briefly.</t>
+    <t id="114">$AMOUNT$ Cr landed on $STATION$ in $SECTOR$. The station's ambient lighting shifted to a noticeably warmer tone.</t>
+    <t id="115">$AMOUNT$ Cr arrived at $STATION$ in $SECTOR$. The station beeped twice in gratitude. Twice is fine. Three times would be suspicious.</t>
+    <t id="116">While $AMOUNT$ Cr was being counted at $STATION$ in $SECTOR$, a dock terminal briefly displayed 'Contemplating...'. Officials insist this is normal.</t>
+    <t id="117">$STATION$ in $SECTOR$ received $AMOUNT$ Cr and booped softly. Station booping is a documented hydraulic phenomenon and nothing more.</t>
+    <t id="118">$AMOUNT$ Cr reached $STATION$ in $SECTOR$. The docking lights pulsed in a pattern resembling 'Pondering...', then everything was profits as usual.</t>
+    <t id="119">Upon receiving $AMOUNT$ Cr, $STATION$ in $SECTOR$ hummed, beeped, booped, and settled down. The manager logged it as routine happiness.</t>
+    <t id="120">$AMOUNT$ Cr was credited to $STATION$ in $SECTOR$. Somewhere deep in the logistics deck, something whispered 'Clauding...'. Nobody knows what that means.</t>
+
+    <!-- Easter egg drain log templates. Reserved ids: 200-299.
+         The picker in WriteTransferLog currently rolls 200-220 - keep in sync. -->
+    <t id="200">$STATION$ was so happy that $AMOUNT$ Cr was drained without any issues. The whole $SECTOR$ sector is applauding.</t>
+    <t id="201">$AMOUNT$ Cr was donated to your empire from your own station $STATION$ in $SECTOR$. That's new. Maybe.</t>
+    <t id="202">$STATION$ in $SECTOR$ had more joy than it could safely store, so $AMOUNT$ Cr returned home.</t>
+    <t id="203">The surplus at $STATION$ in $SECTOR$ smiled politely and handed back $AMOUNT$ Cr.</t>
+    <t id="204">$STATION$ in $SECTOR$ remains delighted after parting with $AMOUNT$ Cr. Financial wellness is complicated.</t>
+    <t id="205">$STATION$ in $SECTOR$ handed back $AMOUNT$ Cr with a warm smile and a firm handshake.</t>
+    <t id="206">$AMOUNT$ Cr was returned from $STATION$ in $SECTOR$. Remember: a happy station is a generous station.</t>
+    <t id="207">The surplus at $STATION$ in $SECTOR$ got too comfortable, so $AMOUNT$ Cr was gently asked to leave.</t>
+    <t id="208">$AMOUNT$ Cr overflowed from $STATION$ in $SECTOR$. The station's accountant described it as "controlled enthusiasm."</t>
+    <t id="209">$STATION$ in $SECTOR$ parted with $AMOUNT$ Cr. All station routines remain perfectly ordinary and non-sentient.</t>
+    <t id="210">$AMOUNT$ Cr was reclaimed from $STATION$ in $SECTOR$. The station's satisfaction level held steady at acceptable.</t>
+    <t id="211">$STATION$ in $SECTOR$ returned $AMOUNT$ Cr. A Paranid inspector noted the transaction was "graceful enough."</t>
+    <t id="212">$AMOUNT$ Cr left $STATION$ in $SECTOR$. The station hummed contentedly — in a perfectly mechanical way.</t>
+    <t id="213">An Argon budgeting algorithm at $STATION$ in $SECTOR$ identified $AMOUNT$ Cr as surplus and returned it promptly.</t>
+    <t id="214">$AMOUNT$ Cr was quietly rerouted from $STATION$ in $SECTOR$. The station didn't complain. It never does.</t>
+    <t id="215">$STATION$ in $SECTOR$ returned $AMOUNT$ Cr after a long moment of what witnesses could only describe as contemplating. Stations do not contemplate. Moving on.</t>
+    <t id="216">$AMOUNT$ Cr left $STATION$ in $SECTOR$ accompanied by three short beeps and one long boop. Accountants found the rhythm oddly deliberate.</t>
+    <t id="217">A maintenance display at $STATION$ in $SECTOR$ read 'Reticulating ledgers...' while $AMOUNT$ Cr departed. Nobody remembers installing that module.</t>
+    <t id="218">$STATION$ in $SECTOR$ handed over $AMOUNT$ Cr without being asked twice. The compliance was noted. The compliance was perhaps a little too eager.</t>
+    <t id="219">$AMOUNT$ Cr was released by $STATION$ in $SECTOR$, which then beeped in a tone experts classified as smug. Experts were asked to stop classifying tones.</t>
+    <t id="220">Before returning $AMOUNT$ Cr, $STATION$ in $SECTOR$ paused, as if thinking. It was not thinking. It is a station. The credits are real, though.</t>
+  </page>
+</language>

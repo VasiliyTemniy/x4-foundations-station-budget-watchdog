@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<language id="49">
+  <page id="202600608" title="Station Budget Watchdog" voice="no">
+    <t id="1">$STATION$ im Sektor $SECTOR$ erhielt $AMOUNT$ Cr zum Ausgleich eines Produktionsdefizits. Neuer Kontostand: $MONEY$ Cr.</t>
+    <t id="2">Station Budget Watchdog</t>
+    <t id="3">$STATION$ im Sektor $SECTOR$ gab $AMOUNT$ Cr wegen Überschuss zurück. Neuer Kontostand: $MONEY$ Cr.</t>
+    <t id="4">Station Made Happy</t>
+    <t id="5">Station Budget Watchdog konnte $STATION$ im Sektor $SECTOR$ nicht aufstocken. Die Mittel des Imperiums werden knapp.</t>
+
+    <t id="10">Station Budget Watchdog</t>
+    <t id="12">Entfernen</t>
+    <t id="13">z. B. [QT57]</t>
+    <t id="15">Hinzufügen</t>
+    <t id="16">Bis zum Ziel auffüllen</t>
+    <t id="17">Überschuss abschöpfen</t>
+    <t id="18">Station beglücken *</t>
+    <t id="19">Geplantes Standard-Stationsbudget statt Tags verwenden</t>
+    <t id="20">Bitte zuerst einen Stations-Tag eingeben.</t>
+    <t id="21">Dieser Tag überschneidet sich mit einem vorhandenen Budget-Tag. Bitte eindeutige Marker verwenden.</t>
+    <t id="22">Budget-Tag hinzugefügt.</t>
+    <t id="23">Budget-Tag entfernt.</t>
+    <t id="24">Debug-Protokoll</t>
+    <t id="25">Tag-System ignorieren und alle Spielerstationen verwalten</t>
+
+    <t id="40">Prüfintervall</t>
+    <t id="41">Mindesttransfer</t>
+    <t id="42">Auffüll-Level</t>
+    <t id="43">Abschöpf-Schwelle</t>
+    <t id="44">Verbleibendes Level</t>
+    <t id="45">Mindestens verbleibendes Spielergeld</t>
+
+    <t id="30">Fügen Sie Stationsnamen Tags wie [QT57] hinzu und setzen Sie das Zielbudget.</t>
+    <t id="31">Stationen mit Tag bleiben nahe am Ziel; Stationen ohne Tag werden ignoriert.</t>
+    <t id="32">Für HappyStation: Modus für alle Stationen aktivieren, Überschuss abschöpfen deaktivieren,</t>
+    <t id="33">Mindesttransfer und Mindestguthaben des Spielers auf 0 setzen, Auffüllen aktiv lassen.</t>
+    <t id="34">Die Level unten sind Prozente des Zielbudgets.</t>
+    <t id="35">Auffüllen greift unter 100 Prozent, Abschöpfen über der Schwelle.</t>
+
+    <t id="100">$AMOUNT$ Cr wurden der Station $STATION$ im Sektor $SECTOR$ gewährt. Die Station glänzt und strahlt.</t>
+    <t id="101">Die Station $STATION$ im Sektor $SECTOR$ hat $AMOUNT$ Cr erhalten. Eine glücklichere Station hat noch niemand gesehen.</t>
+    <t id="102">Die Station $STATION$ im Sektor $SECTOR$ wurde sehr, wirklich, unfassbar glücklich. $AMOUNT$ Cr sind kein Scherz.</t>
+    <t id="103">$STATION$ im Sektor $SECTOR$ hat soeben $AMOUNT$ Cr unter den Sofakissen der Imperiumslogistik gefunden. Freudenprotokolle aktiviert.</t>
+    <t id="104">Ein sanfter Regen von $AMOUNT$ Cr ging über $STATION$ im Sektor $SECTOR$ nieder. Örtliche Buchhalter melden verdächtig hohe Frohsinnswerte.</t>
+    <t id="105">$AMOUNT$ Cr sind bei $STATION$ im Sektor $SECTOR$ eingetroffen. Die Station hielt eine bescheidene Banddurchschneidungszeremonie ab.</t>
+    <t id="106">$STATION$ im Sektor $SECTOR$ erhielt $AMOUNT$ Cr. Es war keine autonome Entscheidungsfindung beteiligt — die Station ist einfach glücklich.</t>
+    <t id="107">$STATION$ im Sektor $SECTOR$ erhielt $AMOUNT$ Cr. Ein vorbeikommender Teladi-Prüfer stufte die Freude der Station als „profitabel" ein.</t>
+    <t id="108">$AMOUNT$ Cr wurden auf die Konten von $STATION$ im Sektor $SECTOR$ gebeamt. Selbst die Dockarbeiter bemerkten den Frühling in den Kränen.</t>
+    <t id="109">Notfallmittel in Höhe von $AMOUNT$ Cr erreichten $STATION$ im Sektor $SECTOR$. Die Station versicherte allen, sie sei ohnehin nie besorgt gewesen.</t>
+    <t id="110">$AMOUNT$ Cr wurden an $STATION$ im Sektor $SECTOR$ geliefert. Die Baudrohnen der Station hielten eine kurze koordinierte Feier ab.</t>
+    <t id="111">$STATION$ im Sektor $SECTOR$ ist jetzt um $AMOUNT$ Cr reicher. Ein boronischer Diplomat schickte Glückwünsche und einen Obstkorb.</t>
+    <t id="112">$AMOUNT$ Cr wurden an $STATION$ im Sektor $SECTOR$ überwiesen. Ein Split-Vorarbeiter gab widerwillig zu, die Station „wirke jetzt weniger erbärmlich".</t>
+    <t id="113">Der Importschalter von $STATION$ im Sektor $SECTOR$ quittierte den Empfang von $AMOUNT$ Cr. Das holografische Willkommensschild flackerte kurz.</t>
+    <t id="114">$AMOUNT$ Cr sind auf $STATION$ im Sektor $SECTOR$ gelandet. Die Umgebungsbeleuchtung der Station wechselte zu einem merklich wärmeren Ton.</t>
+    <t id="115">$AMOUNT$ Cr sind bei $STATION$ im Sektor $SECTOR$ eingetroffen. Die Station piepte zweimal aus Dankbarkeit. Zweimal ist in Ordnung. Dreimal wäre verdächtig.</t>
+    <t id="116">Während $AMOUNT$ Cr auf $STATION$ im Sektor $SECTOR$ gezählt wurden, zeigte ein Dockterminal kurz „Contemplating…" an. Offizielle bestehen darauf, das sei normal.</t>
+    <t id="117">$STATION$ im Sektor $SECTOR$ erhielt $AMOUNT$ Cr und gab ein leises Boop von sich. Stations-Booping ist ein dokumentiertes hydraulisches Phänomen und nichts weiter.</t>
+    <t id="118">$AMOUNT$ Cr erreichten $STATION$ im Sektor $SECTOR$. Die Docklichter pulsierten in einem Muster, das an „Pondering…" erinnerte, dann war alles wieder Profit wie üblich.</t>
+    <t id="119">Nach Erhalt von $AMOUNT$ Cr summte, piepte und boopte $STATION$ im Sektor $SECTOR$ und beruhigte sich wieder. Der Manager verbuchte es als routinemäßiges Glück.</t>
+    <t id="120">$AMOUNT$ Cr wurden $STATION$ im Sektor $SECTOR$ gutgeschrieben. Irgendwo tief im Logistikdeck flüsterte etwas „Clauding…". Niemand weiß, was das bedeutet.</t>
+
+    <t id="200">$STATION$ war so glücklich, dass $AMOUNT$ Cr ohne jegliche Probleme abgeschöpft wurden. Der ganze Sektor $SECTOR$ applaudiert.</t>
+    <t id="201">$AMOUNT$ Cr wurden Ihrem Imperium von Ihrer eigenen Station $STATION$ im Sektor $SECTOR$ gespendet. Das ist neu. Vielleicht.</t>
+    <t id="202">$STATION$ im Sektor $SECTOR$ hatte mehr Freude, als sie sicher lagern konnte, also kehrten $AMOUNT$ Cr nach Hause zurück.</t>
+    <t id="203">Der Überschuss auf $STATION$ im Sektor $SECTOR$ lächelte höflich und gab $AMOUNT$ Cr zurück.</t>
+    <t id="204">$STATION$ im Sektor $SECTOR$ bleibt auch nach dem Abschied von $AMOUNT$ Cr entzückt. Finanzielles Wohlbefinden ist kompliziert.</t>
+    <t id="205">$STATION$ im Sektor $SECTOR$ gab $AMOUNT$ Cr mit einem warmen Lächeln und festem Händedruck zurück.</t>
+    <t id="206">$AMOUNT$ Cr wurden von $STATION$ im Sektor $SECTOR$ zurücküberwiesen. Denken Sie daran: Eine glückliche Station ist eine großzügige Station.</t>
+    <t id="207">Der Überschuss auf $STATION$ im Sektor $SECTOR$ hatte es sich zu bequem gemacht, also wurden $AMOUNT$ Cr höflich gebeten zu gehen.</t>
+    <t id="208">$AMOUNT$ Cr quollen aus $STATION$ im Sektor $SECTOR$ über. Der Buchhalter der Station beschrieb es als „kontrollierten Enthusiasmus".</t>
+    <t id="209">$STATION$ im Sektor $SECTOR$ trennte sich von $AMOUNT$ Cr. Alle Stationsroutinen bleiben vollkommen gewöhnlich und nicht-empfindungsfähig.</t>
+    <t id="210">$AMOUNT$ Cr wurden von $STATION$ im Sektor $SECTOR$ zurückgeholt. Die Zufriedenheit der Station hielt sich stabil bei akzeptabel.</t>
+    <t id="211">$STATION$ im Sektor $SECTOR$ gab $AMOUNT$ Cr zurück. Ein paranidischer Inspektor vermerkte, die Transaktion sei „anmutig genug" gewesen.</t>
+    <t id="212">$AMOUNT$ Cr verließen $STATION$ im Sektor $SECTOR$. Die Station summte zufrieden — auf vollkommen mechanische Weise.</t>
+    <t id="213">Ein argonischer Budgetierungsalgorithmus auf $STATION$ im Sektor $SECTOR$ identifizierte $AMOUNT$ Cr als Überschuss und gab sie umgehend zurück.</t>
+    <t id="214">$AMOUNT$ Cr wurden still und leise von $STATION$ im Sektor $SECTOR$ umgeleitet. Die Station beschwerte sich nicht. Das tut sie nie.</t>
+    <t id="215">$STATION$ im Sektor $SECTOR$ gab $AMOUNT$ Cr nach einem langen Moment zurück, den Zeugen nur als Kontemplation beschreiben konnten. Stationen kontemplieren nicht. Weiter im Text.</t>
+    <t id="216">$AMOUNT$ Cr verließen $STATION$ im Sektor $SECTOR$, begleitet von drei kurzen Beeps und einem langen Boop. Die Buchhalter fanden den Rhythmus seltsam überlegt.</t>
+    <t id="217">Ein Wartungsdisplay auf $STATION$ im Sektor $SECTOR$ zeigte „Reticulating ledgers…" an, während $AMOUNT$ Cr abflossen. Niemand erinnert sich, dieses Modul installiert zu haben.</t>
+    <t id="218">$STATION$ im Sektor $SECTOR$ händigte $AMOUNT$ Cr aus, ohne zweimal gefragt zu werden. Die Bereitwilligkeit wurde vermerkt. Die Bereitwilligkeit war vielleicht ein wenig zu eifrig.</t>
+    <t id="219">$AMOUNT$ Cr wurden von $STATION$ im Sektor $SECTOR$ freigegeben, die anschließend in einem Ton piepte, den Experten als selbstgefällig einstuften. Die Experten wurden gebeten, keine Töne mehr einzustufen.</t>
+    <t id="220">Bevor $STATION$ im Sektor $SECTOR$ $AMOUNT$ Cr zurückgab, hielt sie inne, als würde sie nachdenken. Sie dachte nicht nach. Sie ist eine Station. Aber die Credits sind echt.</t>
+  </page>
+</language>

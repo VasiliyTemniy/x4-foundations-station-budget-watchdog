@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<language id="33">
+  <page id="202600608" title="Station Budget Watchdog" voice="no">
+    <t id="1">$STATION$ dans $SECTOR$ a reçu $AMOUNT$ cr pour combler un déficit de production. Nouveau solde : $MONEY$ cr.</t>
+    <t id="2">Station Budget Watchdog</t>
+    <t id="3">$STATION$ dans $SECTOR$ a restitué $AMOUNT$ cr pour cause d'excédent. Nouveau solde : $MONEY$ cr.</t>
+    <t id="4">Station Made Happy</t>
+    <t id="5">Station Budget Watchdog n'a pas pu recharger $STATION$ dans $SECTOR$. Les fonds de l'empire sont trop bas.</t>
+
+    <t id="10">Station Budget Watchdog</t>
+    <t id="12">Retirer</t>
+    <t id="13">ex. [QT57]</t>
+    <t id="15">Ajouter</t>
+    <t id="16">Recharger jusqu'à la cible</t>
+    <t id="17">Drainer l'excédent</t>
+    <t id="18">Rendre la station heureuse *</t>
+    <t id="19">Utiliser le budget planifié vanilla au lieu des balises</t>
+    <t id="20">Saisissez d'abord une balise de station.</t>
+    <t id="21">Cette balise chevauche une balise budgétaire existante. Utilisez des marqueurs uniques.</t>
+    <t id="22">Balise budgétaire ajoutée.</t>
+    <t id="23">Balise budgétaire retirée.</t>
+    <t id="24">Journal de débogage</t>
+    <t id="25">Ignorer le système de balises et gérer toutes les stations du joueur</t>
+
+    <t id="40">Intervalle de vérification</t>
+    <t id="41">Transfert minimum</t>
+    <t id="42">Niveau de recharge</t>
+    <t id="43">Seuil de drainage</t>
+    <t id="44">Niveau conservé</t>
+    <t id="45">Argent minimum conservé du joueur</t>
+
+    <t id="30">Ajoutez une balise comme [QT57] au nom d'une station, puis fixez son budget cible.</t>
+    <t id="31">Les stations balisées restent près de la cible; les autres sont ignorées.</t>
+    <t id="32">Pour le comportement HappyStation: activez le mode toutes stations, désactivez le drainage,</t>
+    <t id="33">mettez le transfert minimum et l'argent joueur minimum à 0, gardez le rechargement actif.</t>
+    <t id="34">Les niveaux ci-dessous sont des pourcentages du budget cible.</t>
+    <t id="35">Le rechargement se déclenche sous 100 pour cent, le drainage au-dessus du seuil.</t>
+
+    <t id="100">$AMOUNT$ cr ont été accordés à la station $STATION$ dans $SECTOR$. La station rayonne et brille.</t>
+    <t id="101">La station $STATION$ dans $SECTOR$ a reçu $AMOUNT$ cr. On n'a jamais vu de station plus heureuse.</t>
+    <t id="102">La station $STATION$ dans $SECTOR$ est devenue très, vraiment, profondément heureuse. $AMOUNT$ cr, ce n'est pas rien.</t>
+    <t id="103">$STATION$ dans $SECTOR$ vient de trouver $AMOUNT$ cr sous les coussins du canapé de la logistique impériale. Protocoles de joie activés.</t>
+    <t id="104">Une douce pluie de $AMOUNT$ cr s'est abattue sur $STATION$ dans $SECTOR$. Les comptables locaux signalent des niveaux de gaieté suspects.</t>
+    <t id="105">$AMOUNT$ cr sont arrivés à $STATION$ dans $SECTOR$. La station a organisé une modeste cérémonie de coupure de ruban.</t>
+    <t id="106">$STATION$ dans $SECTOR$ a reçu $AMOUNT$ cr. Aucune prise de décision autonome — la station est simplement heureuse.</t>
+    <t id="107">$STATION$ dans $SECTOR$ a reçu $AMOUNT$ cr. Un auditeur teladi de passage a qualifié la joie de la station de « profitable ».</t>
+    <t id="108">$AMOUNT$ cr ont été téléportés sur les comptes de $STATION$ dans $SECTOR$. Même les dockers ont remarqué le printemps dans les grues.</t>
+    <t id="109">Des fonds d'urgence de $AMOUNT$ cr ont atteint $STATION$ dans $SECTOR$. La station a assuré à tous qu'elle n'était pas inquiète du tout.</t>
+    <t id="110">$AMOUNT$ cr ont été livrés à $STATION$ dans $SECTOR$. Les drones de construction de la station ont organisé une brève célébration coordonnée.</t>
+    <t id="111">$STATION$ dans $SECTOR$ est maintenant $AMOUNT$ cr plus riche. Un diplomate boron a envoyé ses félicitations et une corbeille de fruits.</t>
+    <t id="112">$AMOUNT$ cr transférés à $STATION$ dans $SECTOR$. Un contremaître split a admis à contrecœur que la station « semble moins pathétique maintenant ».</t>
+    <t id="113">Le bureau d'importation de $STATION$ dans $SECTOR$ a signé pour $AMOUNT$ cr. Le panneau d'accueil holographique a clignoté brièvement.</t>
+    <t id="114">$AMOUNT$ cr ont atterri sur $STATION$ dans $SECTOR$. L'éclairage ambiant de la station a viré à un ton nettement plus chaleureux.</t>
+    <t id="115">$AMOUNT$ cr sont arrivés à $STATION$ dans $SECTOR$. La station a bipé deux fois en signe de gratitude. Deux fois, c'est bien. Trois fois serait suspect.</t>
+    <t id="116">Pendant que $AMOUNT$ cr étaient comptés à $STATION$ dans $SECTOR$, un terminal de quai a brièvement affiché « Contemplating… ». Les officiels insistent : c'est normal.</t>
+    <t id="117">$STATION$ dans $SECTOR$ a reçu $AMOUNT$ cr et a bipé doucement. Le bipage de station est un phénomène hydraulique documenté et rien de plus.</t>
+    <t id="118">$AMOUNT$ cr ont atteint $STATION$ dans $SECTOR$. Les feux de quai ont pulsé selon un motif ressemblant à « Pondering… », puis tout est redevenu rentable.</t>
+    <t id="119">En recevant $AMOUNT$ cr, $STATION$ dans $SECTOR$ a bourdonné, bipé, bupé, puis s'est calmée. Le gestionnaire a noté un bonheur routinier.</t>
+    <t id="120">$AMOUNT$ cr ont été crédités à $STATION$ dans $SECTOR$. Quelque part dans la soute logistique, quelque chose a chuchoté « Clauding… ». Personne ne sait ce que ça veut dire.</t>
+
+    <t id="200">$STATION$ était si heureuse que $AMOUNT$ cr ont été drainés sans aucun problème. Tout le secteur $SECTOR$ applaudit.</t>
+    <t id="201">$AMOUNT$ cr ont été donnés à votre empire par votre propre station $STATION$ dans $SECTOR$. C'est nouveau. Peut-être.</t>
+    <t id="202">$STATION$ dans $SECTOR$ avait plus de joie qu'elle ne pouvait en stocker en sécurité, alors $AMOUNT$ cr sont rentrés à la maison.</t>
+    <t id="203">L'excédent de $STATION$ dans $SECTOR$ a souri poliment et a rendu $AMOUNT$ cr.</t>
+    <t id="204">$STATION$ dans $SECTOR$ reste ravie après s'être séparée de $AMOUNT$ cr. Le bien-être financier, c'est compliqué.</t>
+    <t id="205">$STATION$ dans $SECTOR$ a rendu $AMOUNT$ cr avec un sourire chaleureux et une poignée de main ferme.</t>
+    <t id="206">$AMOUNT$ cr ont été retournés par $STATION$ dans $SECTOR$. Rappelez-vous : une station heureuse est une station généreuse.</t>
+    <t id="207">L'excédent de $STATION$ dans $SECTOR$ s'est trop installé, alors $AMOUNT$ cr ont été gentiment invités à partir.</t>
+    <t id="208">$AMOUNT$ cr ont débordé de $STATION$ dans $SECTOR$. Le comptable de la station a décrit cela comme de « l'enthousiasme contrôlé ».</t>
+    <t id="209">$STATION$ dans $SECTOR$ s'est séparée de $AMOUNT$ cr. Toutes les routines de la station restent parfaitement ordinaires et non-sentientes.</t>
+    <t id="210">$AMOUNT$ cr ont été récupérés de $STATION$ dans $SECTOR$. Le niveau de satisfaction de la station est resté stable à acceptable.</t>
+    <t id="211">$STATION$ dans $SECTOR$ a restitué $AMOUNT$ cr. Un inspecteur paranid a noté que la transaction était « assez gracieuse ».</t>
+    <t id="212">$AMOUNT$ cr ont quitté $STATION$ dans $SECTOR$. La station a bourdonné avec contentement — de façon parfaitement mécanique.</t>
+    <t id="213">Un algorithme budgétaire argon sur $STATION$ dans $SECTOR$ a identifié $AMOUNT$ cr comme excédent et les a retournés promptement.</t>
+    <t id="214">$AMOUNT$ cr ont été discrètement redirigés depuis $STATION$ dans $SECTOR$. La station ne s'est pas plainte. Elle ne se plaint jamais.</t>
+    <t id="215">$STATION$ dans $SECTOR$ a rendu $AMOUNT$ cr après un long moment que les témoins n'ont pu décrire que comme de la méditation. Les stations ne méditent pas. On passe à la suite.</t>
+    <t id="216">$AMOUNT$ cr ont quitté $STATION$ dans $SECTOR$ accompagnés de trois bips courts et un long bup. Les comptables ont trouvé le rythme étrangement délibéré.</t>
+    <t id="217">Un écran de maintenance sur $STATION$ dans $SECTOR$ affichait « Reticulating ledgers… » pendant que $AMOUNT$ cr partaient. Personne ne se souvient avoir installé ce module.</t>
+    <t id="218">$STATION$ dans $SECTOR$ a remis $AMOUNT$ cr sans se le faire demander deux fois. La conformité a été notée. La conformité était peut-être un peu trop empressée.</t>
+    <t id="219">$AMOUNT$ cr ont été libérés par $STATION$ dans $SECTOR$, qui a ensuite bipé sur un ton que les experts ont classé comme suffisant. Les experts ont été priés d'arrêter de classer les tons.</t>
+    <t id="220">Avant de rendre $AMOUNT$ cr, $STATION$ dans $SECTOR$ a marqué une pause, comme si elle réfléchissait. Elle ne réfléchissait pas. C'est une station. Les crédits sont réels, par contre.</t>
+  </page>
+</language>
