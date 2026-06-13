@@ -9,9 +9,9 @@ The vanilla "expected operating budget" is calculated from a station's potential
 [size=4][b]Game version compatibility[/b][/size]
 
 [list]
-[*][i] 9.00 release[/i] - [b]supported[/b][/*]
-[*][i] 9.00 betas and release candidates[/i] - [b]supported[/b][/*]
-[*][i] 8.00 release[/i] - [b]supported[/b][/*]
+[*][i]9.00 release[/i] - [b]supported[/b][/*]
+[*][i]9.00 betas and release candidates[/i] - [b]supported[/b][/*]
+[*][i]8.00 release[/i] - [b]supported[/b][/*]
 [/list]
 
 [size=4][b]Dependencies[/b][/size]
@@ -22,11 +22,11 @@ The vanilla "expected operating budget" is calculated from a station's potential
 
 [size=4][b]How it works[/b][/size]
 
-Put a tag like [font=Courier New]&#91;QT57&#93;[/font] in a station's name and give that tag a target budget [font=Courier New]T[/font]. On every check the watchdog looks at the live balance (default levels shown; all of them are sliders in the options menu):
+Put a tag like [[font=Courier New]QT57][/font] in a station's name and give that tag a target budget [font=Courier New]T[/font]. On every check the watchdog looks at the live balance (default levels shown; all of them are sliders in the options menu):
 
 [list]
-[*][font=Courier New]money &lt; 1x T[/font]: grants credits up to the fill level ([font=Courier New]2x T[/font]), capped by your account. If you cannot afford that, it tries the plain deficit (back to [font=Courier New]1x T[/font]); if you cannot afford even that, it warns and waits.[/*]
-[*][font=Courier New]money &gt;[/font] trigger level ([font=Courier New]3x T[/font]): reclaims the surplus, leaving the leave level ([font=Courier New]1.5x T[/font]) at the station.[/*]
+[*][font=Courier New]money < 1x T[/font]: grants credits up to the fill level ([font=Courier New]2x T[/font]), capped by your account. If you cannot afford that, it tries the plain deficit (back to [font=Courier New]1x T[/font]); if you cannot afford even that, it warns and waits.[/*]
+[*][font=Courier New]money >[/font] trigger level ([font=Courier New]3x T[/font]): reclaims the surplus, leaving the leave level ([font=Courier New]1.5x T[/font]) at the station.[/*]
 [*]in between: leaves the station alone.[/*]
 [/list]
 
@@ -48,10 +48,10 @@ Open Extension Options and use the Station Budget Watchdog menu to add or remove
 Default tags:
 
 [list]
-[*][font=Courier New]&#91;AB5&#93;[/font] - 5,000,000 Cr[/*]
-[*][font=Courier New]&#91;AB10&#93;[/font] - 10,000,000 Cr[/*]
-[*][font=Courier New]&#91;AB20&#93;[/font] - 20,000,000 Cr[/*]
-[*][font=Courier New]&#91;AB40&#93;[/font] - 40,000,000 Cr[/*]
+[*][font=Courier New][AB5][/font] - 5,000,000 Cr[/*]
+[*][font=Courier New][AB10][/font] - 10,000,000 Cr[/*]
+[*][font=Courier New][AB20][/font] - 20,000,000 Cr[/*]
+[*][font=Courier New][AB40][/font] - 40,000,000 Cr[/*]
 [/list]
 
 The first configured tag found in a station's name wins. Untagged stations are ignored unless [font=Courier New]Ignore tag system and handle all player stations[/font] is enabled. In that mode every operational player station is handled and its target is the station's vanilla planned budget ([font=Courier New]productionmoney[/font]).
