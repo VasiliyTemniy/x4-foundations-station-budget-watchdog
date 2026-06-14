@@ -237,7 +237,7 @@
           <replace string="'$AMOUNT$'" with="$Amount.formatted.default"/>
           <replace string="'$MONEY$'" with="$Station.money.formatted.default"/>
         </substitute_text>
-        <write_to_logbook category="upkeep" object="$Station" title="$title" text="$text" money="$Amount" interaction="showonmap"/>
+        <write_to_logbook category="upkeep" object="$Station" title="$title" text="$text" money="if $Mode == 'topup' then -$Amount else $Amount" interaction="showonmap"/>
         <show_notification text="$text" sound="ui_notification_player_alert_01"/>
       </actions>
     </library>
