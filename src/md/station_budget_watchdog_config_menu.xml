@@ -458,7 +458,7 @@
           $col = 1,
           $colSpan = 4,
           $id = 'vas_sbw_newtarget',
-          $min = 1,
+          $min = 0,
           $max = 500,
           $step = 1,
           $height = 'Helper.slidercellMinHeight',
@@ -631,7 +631,7 @@
         <do_else>
           <append_to_list name="player.entity.$vas_sbw_targets" exact="table[
             $tag = $tag,
-            $target = player.entity.$vas_sbw_newtargetm * 1000000Cr,
+            $target = if player.entity.$vas_sbw_newtargetm == 0 then 1Cr else player.entity.$vas_sbw_newtargetm * 1000000Cr,
           ]"/>
           <set_value name="player.entity.$vas_sbw_ignore_next_newtag_deactivate" exact="true"/>
           <set_value name="player.entity.$vas_sbw_newtag" exact="''"/>
