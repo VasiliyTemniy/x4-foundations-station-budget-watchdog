@@ -59,10 +59,67 @@
     </cue>
 
     <!--@doc
+        Derive the station's supply budget from its supply orders. Unit orders are
+        capped by remaining unit capacity; ammunition/deployables use their
+        ware-specific remaining ammo capacity. Each ordered item's resource recipe
+        is valued at the midpoint between average and maximum resource price, which
+        matches the vanilla native Supply Budget in the controlled test.
+        Params: Station.
+        Returns: derived supply budget. -->
+    <library name="DeriveSupplyBudget" purpose="run_actions">
+      <params>
+        <param name="Station"/>
+      </params>
+      <actions>
+        <set_value name="$budget" exact="0Cr"/>
+        <set_value name="$unitfree" exact="$Station.units.free"/>
+        <do_for_each name="$supplyware" in="$Station.supplyorders.list">
+          <set_value name="$ordered" exact="$Station.supplyorders.{$supplyware}.count"/>
+          <set_value name="$effective" exact="$ordered"/>
+          <do_if value="$supplyware.isammo or $supplyware.isdeployable">
+            <set_value name="$effective" exact="[$effective, $Station.ammostorage.{$supplyware}.free].min"/>
+          </do_if>
+          <do_else>
+            <set_value name="$effective" exact="[$effective, $unitfree].min"/>
+            <set_value name="$unitfree" exact="[$unitfree - $effective, 0].max"/>
+          </do_else>
+          <do_if value="$effective gt 0">
+            <do_for_each name="$resource" in="$supplyware.resources.list">
+              <set_value name="$resourceamount" exact="$supplyware.resources.{$resource}.count"/>
+              <set_value name="$resourceprice" exact="($resource.averageprice + $resource.maxprice) / 2"/>
+              <set_value name="$budget" operation="add" exact="$effective * $resourceamount * $resourceprice"/>
+            </do_for_each>
+          </do_if>
+        </do_for_each>
+        <return value="$budget"/>
+      </actions>
+    </library>
+
+    <!--@doc
+        Resolve the automatic station budget used by all-stations mode and the
+        vanilla-budget tag option: exact MD production and trade-ware budgets plus
+        the supply-order budget derived by DeriveSupplyBudget.
+        Params: Station.
+        Returns: table[$target, $kind]. -->
+    <library name="ResolveAutomaticBudget" purpose="run_actions">
+      <params>
+        <param name="Station"/>
+      </params>
+      <actions>
+        <run_actions ref="DeriveSupplyBudget" result="$supplybudget">
+          <param name="Station" value="$Station"/>
+        </run_actions>
+        <set_value name="$target" exact="$Station.productionmoney + $Station.tradewaremoney + $supplybudget"/>
+        <set_value name="$kind" exact="'production-tradeware-derived-supply'"/>
+        <return value="table[$target = $target, $kind = $kind]"/>
+      </actions>
+    </library>
+
+    <!--@doc
         Resolve a station's budget target. In all-stations mode, every station
-        targets its vanilla productionmoney. Otherwise, first configured name tag
-        found in the station name wins; with "Use vanilla station planned budget"
-        on, the matched station targets its productionmoney instead of the tag's
+        uses ResolveAutomaticBudget. Otherwise, first configured name tag found
+        in the station name wins; with "Use vanilla station planned budget" on,
+        the matched station uses ResolveAutomaticBudget instead of the tag's
         configured amount.
         Params: Station.
         Returns: table[$target, $matched_tag, $source]; $target is 0 on no match. -->
@@ -75,8 +132,11 @@
         <set_value name="$source" exact="'none'"/>
         <set_value name="$target" exact="0"/>
         <do_if value="@player.entity.$vas_sbw_handle_all_stations">
-          <set_value name="$source" exact="'all-stations-productionmoney'"/>
-          <set_value name="$target" exact="$Station.productionmoney"/>
+          <run_actions ref="ResolveAutomaticBudget" result="$budget">
+            <param name="Station" value="$Station"/>
+          </run_actions>
+          <set_value name="$source" exact="'all-stations-' + $budget.$kind"/>
+          <set_value name="$target" exact="$budget.$target"/>
           <return value="table[$target = $target, $matched_tag = $matched_tag, $source = $source]"/>
         </do_if>
         <do_for_each name="$entry" in="@player.entity.$vas_sbw_targets">
@@ -92,8 +152,11 @@
               <set_value name="$source" exact="'tag'"/>
               <set_value name="$target" exact="$entry.$target"/>
               <do_if value="@player.entity.$vas_sbw_use_vanilla_budget">
-                <set_value name="$source" exact="'vanilla-productionmoney'"/>
-                <set_value name="$target" exact="$Station.productionmoney"/>
+                <run_actions ref="ResolveAutomaticBudget" result="$budget">
+                  <param name="Station" value="$Station"/>
+                </run_actions>
+                <set_value name="$source" exact="'vanilla-' + $budget.$kind"/>
+                <set_value name="$target" exact="$budget.$target"/>
               </do_if>
               <break/>
             </do_if>
@@ -144,7 +207,8 @@
              player on its own schedule - that is what bounced grants on stations
              with small auto-estimated budgets (warehouses). Lift maxbudget clear
              of our whole band so the watchdog alone manages this account. -->
-        <set_value name="$wantmaxbudget" exact="(($target * $checkpct) / 100) * 2"/>
+        <set_value name="$wantmaxbudget"
+          exact="[(($target * $checkpct) / 100) * 2, $target + $mintransfer].max"/>
         <do_if value="$Station.maxbudget lt $wantmaxbudget">
           <set_object_max_budget object="$Station" amount="$wantmaxbudget"/>
           <debug_to_file chance="$debugchance" name="$Station.idcode" directory="'VAS_StationBudgetWatchdog'" text="'[' + player.age + '] maxbudget lifted: now=' + $Station.maxbudget.formatted.default + ' wanted=' + $wantmaxbudget.formatted.default" append="true"/>
