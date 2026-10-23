@@ -28,6 +28,10 @@
     <t id="43">Soglia di drenaggio</t>
     <t id="44">Livello da mantenere</t>
     <t id="45">Denaro minimo del giocatore da mantenere</t>
+    <t id="46">Tag</t>
+    <t id="47">Budget target</t>
+    <t id="48">Ricarica</t>
+    <t id="49">Consenti alle stazioni con questo tag di ricevere crediti quando il saldo è inferiore al target. Richiede che il rifornimento globale sia attivo. Non disponibile con un target pari a zero, salvo quando si usa il budget pianificato vanilla.</t>
 
     <t id="30">Aggiungi tag come [QT57] ai nomi stazione e imposta il budget del tag.</t>
     <t id="31">Le stazioni con tag restano vicine al target; le altre sono ignorate.</t>

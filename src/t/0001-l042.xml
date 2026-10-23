@@ -28,6 +28,10 @@
     <t id="43">Práh odvádění</t>
     <t id="44">Ponechávaná úroveň</t>
     <t id="45">Minimální ponechané peníze hráče</t>
+    <t id="46">Tag</t>
+    <t id="47">Cílový rozpočet</t>
+    <t id="48">Doplnění</t>
+    <t id="49">Povolit stanicím s tímto tagem přijímat kredity, když je jejich zůstatek pod cílovou hodnotou. Vyžaduje zapnuté globální doplňování. Nedostupné při nulové cílové hodnotě, pokud se nepoužívá standardní plánovaný rozpočet.</t>
 
     <t id="30">Přidejte do názvu stanice tag jako [QT57] a nastavte cílový rozpočet tagu.</t>
     <t id="31">Stanice s tagem se drží cíle; stanice bez tagu se ignorují.</t>

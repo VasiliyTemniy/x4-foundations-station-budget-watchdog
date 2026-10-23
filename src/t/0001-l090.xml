@@ -28,6 +28,10 @@
     <t id="43">Boşaltma tetik seviyesi</t>
     <t id="44">Bırakılacak seviye</t>
     <t id="45">Oyuncu parasında asgari tutulan miktar</t>
+    <t id="46">Etiket</t>
+    <t id="47">Hedef bütçe</t>
+    <t id="48">Doldurma</t>
+    <t id="49">Bu etikete sahip istasyonların bakiyeleri hedefin altındayken kredi almasına izin verin. Genel doldurma seçeneğinin açık olması gerekir. Standart planlanan bütçe kullanılmadığı sürece sıfır hedef için kullanılamaz.</t>
 
     <t id="30">İstasyon adlarına [QT57] gibi etiketler ekleyin ve etiketin hedef bütçesini ayarlayın.</t>
     <t id="31">Etiketli istasyonlar hedefe yakın tutulur; etiketsiz olanlar yok sayılır.</t>

@@ -28,6 +28,10 @@
     <t id="43">Umbral de drenado</t>
     <t id="44">Nivel a conservar</t>
     <t id="45">Dinero mínimo del jugador a conservar</t>
+    <t id="46">Etiqueta</t>
+    <t id="47">Presupuesto objetivo</t>
+    <t id="48">Recarga</t>
+    <t id="49">Permitir que las estaciones con esta etiqueta reciban créditos cuando su saldo sea inferior al objetivo. Requiere que la recarga global esté activada. No disponible para un objetivo de cero, salvo si se usa el presupuesto planificado vanilla.</t>
 
     <t id="30">Añada etiquetas como [QT57] a estaciones y fije el presupuesto de esa etiqueta.</t>
     <t id="31">Las estaciones etiquetadas siguen su objetivo; las demás se ignoran.</t>

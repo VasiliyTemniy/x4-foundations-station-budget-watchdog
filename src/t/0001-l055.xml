@@ -28,6 +28,10 @@
     <t id="43">Limiar de drenagem</t>
     <t id="44">Nível a manter</t>
     <t id="45">Dinheiro mínimo do jogador a manter</t>
+    <t id="46">Tag</t>
+    <t id="47">Orçamento-alvo</t>
+    <t id="48">Recarga</t>
+    <t id="49">Permitir que estações com esta tag recebam créditos quando o saldo estiver abaixo do alvo. Requer que a recarga global esteja ativada. Indisponível para um alvo de zero, exceto quando o orçamento planejado vanilla estiver em uso.</t>
 
     <t id="30">Adicione tags como [QT57] aos nomes das estações e defina o orçamento da tag.</t>
     <t id="31">Estações com tag ficam perto do alvo; estações sem tag são ignoradas.</t>

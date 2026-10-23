@@ -122,7 +122,8 @@
         the matched station uses ResolveAutomaticBudget instead of the tag's
         configured amount.
         Params: Station.
-        Returns: table[$target, $matched_tag, $source]; $target is 0 on no match. -->
+        Returns: table[$target, $matched_tag, $source, $topup_enabled];
+        source is 'none' on no match. -->
     <library name="ResolveTarget" purpose="run_actions">
       <params>
         <param name="Station"/>
@@ -131,16 +132,17 @@
         <set_value name="$matched_tag" exact="''"/>
         <set_value name="$source" exact="'none'"/>
         <set_value name="$target" exact="0"/>
+        <set_value name="$topup_enabled" exact="true"/>
         <do_if value="@player.entity.$vas_sbw_handle_all_stations">
           <run_actions ref="ResolveAutomaticBudget" result="$budget">
             <param name="Station" value="$Station"/>
           </run_actions>
           <set_value name="$source" exact="'all-stations-' + $budget.$kind"/>
           <set_value name="$target" exact="$budget.$target"/>
-          <return value="table[$target = $target, $matched_tag = $matched_tag, $source = $source]"/>
+          <return value="table[$target = $target, $matched_tag = $matched_tag, $source = $source, $topup_enabled = $topup_enabled]"/>
         </do_if>
         <do_for_each name="$entry" in="@player.entity.$vas_sbw_targets">
-          <do_if value="@$entry.$tag and @$entry.$target">
+          <do_if value="@$entry.$tag and (@$entry.$target + '') != 'null'">
             <!-- Replace-and-compare: the name changed iff it contained the tag -->
             <set_value name="$name" exact="$Station.knownname"/>
             <set_value name="$before" exact="$name"/>
@@ -151,6 +153,7 @@
               <set_value name="$matched_tag" exact="$entry.$tag"/>
               <set_value name="$source" exact="'tag'"/>
               <set_value name="$target" exact="$entry.$target"/>
+              <set_value name="$topup_enabled" exact="((@$entry.$topup_enabled + '') == 'null') or $entry.$topup_enabled"/>
               <do_if value="@player.entity.$vas_sbw_use_vanilla_budget">
                 <run_actions ref="ResolveAutomaticBudget" result="$budget">
                   <param name="Station" value="$Station"/>
@@ -162,7 +165,7 @@
             </do_if>
           </do_if>
         </do_for_each>
-        <return value="table[$target = $target, $matched_tag = $matched_tag, $source = $source]"/>
+        <return value="table[$target = $target, $matched_tag = $matched_tag, $source = $source, $topup_enabled = $topup_enabled]"/>
       </actions>
     </library>
 
@@ -180,15 +183,17 @@
         <run_actions ref="ResolveTarget" result="$resolved">
           <param name="Station" value="$Station"/>
         </run_actions>
-        <do_if value="$resolved.$target le 0">
+        <!-- Zero is a valid target only for an explicit manual tag; a zero
+             automatic budget means "unknown" and leaves the station alone. -->
+        <do_if value="$resolved.$source == 'none' or $resolved.$target lt 0 or ($resolved.$source != 'tag' and $resolved.$target le 0)">
           <return/>
         </do_if>
         <set_value name="$target" exact="$resolved.$target"/>
         <set_value name="$money" exact="$Station.money"/>
 
         <!-- Tuning knobs from the options menu, with defaults when unset.
-             Levels are percent of target; min transfer slider is in M Cr (0 is valid). -->
-        <set_value name="$mintransfer" exact="(if (@player.entity.$vas_sbw_min_transfer_m + '') != 'null' then player.entity.$vas_sbw_min_transfer_m else 1) * 1000000Cr"/>
+             Levels are percent of target; money sliders use whole credits (0 is valid). -->
+        <set_value name="$mintransfer" exact="(if (@player.entity.$vas_sbw_min_transfer_cr + '') != 'null' then player.entity.$vas_sbw_min_transfer_cr else 1000000)i * 1Cr"/>
         <set_value name="$grantpct" exact="if @player.entity.$vas_sbw_grant_pct then player.entity.$vas_sbw_grant_pct else 200"/>
         <set_value name="$checkpct" exact="if @player.entity.$vas_sbw_drain_check_pct then player.entity.$vas_sbw_drain_check_pct else 300"/>
         <set_value name="$leavepct" exact="if @player.entity.$vas_sbw_drain_leave_pct then player.entity.$vas_sbw_drain_leave_pct else 150"/>
@@ -198,7 +203,7 @@
         <set_value name="$grantpct" exact="[[$grantpct, 100].max, $checkpct].min"/>
         <set_value name="$leavepct" exact="[[$leavepct, 100].max, $checkpct].min"/>
 
-        <set_value name="$topup_enabled" exact="((@player.entity.$vas_sbw_topup_enabled + '') == 'null') or player.entity.$vas_sbw_topup_enabled"/>
+        <set_value name="$topup_enabled" exact="(((@player.entity.$vas_sbw_topup_enabled + '') == 'null') or player.entity.$vas_sbw_topup_enabled) and $resolved.$topup_enabled"/>
         <set_value name="$drain_enabled" exact="((@player.entity.$vas_sbw_drain_enabled + '') == 'null') or player.entity.$vas_sbw_drain_enabled"/>
 
         <debug_to_file chance="$debugchance" name="$Station.idcode" directory="'VAS_StationBudgetWatchdog'" text="'[' + player.age + '] check: station=' + $Station.knownname + ' tag=' + $resolved.$matched_tag + ' source=' + $resolved.$source + ' money=' + $money.formatted.default + ' target=' + $target.formatted.default + ' grant=' + $grantpct + ' trigger=' + $checkpct + ' leave=' + $leavepct + ' floor=' + $mintransfer.formatted.default + ' minbudget=' + $Station.minbudget.formatted.default + ' maxbudget=' + $Station.maxbudget.formatted.default + ' productionmoney=' + $Station.productionmoney.formatted.default" append="true"/>
@@ -217,7 +222,7 @@
         <!-- Below 1x target: top it up -->
         <do_if value="$topup_enabled and $money lt $target">
           <!-- Only money above the configured wallet reserve may be spent -->
-          <set_value name="$reserve" exact="(if (@player.entity.$vas_sbw_keep_player_m + '') != 'null' then player.entity.$vas_sbw_keep_player_m else 20) * 1000000Cr"/>
+          <set_value name="$reserve" exact="(if (@player.entity.$vas_sbw_keep_player_cr + '') != 'null' then player.entity.$vas_sbw_keep_player_cr else 20000000)i * 1Cr"/>
           <set_value name="$available" exact="faction.player.money - $reserve"/>
           <!-- First, try filling all the way to the grant level (default 2x target) -->
           <set_value name="$grant" exact="(($target * $grantpct) / 100) - $money"/>

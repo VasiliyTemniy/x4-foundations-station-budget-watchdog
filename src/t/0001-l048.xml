@@ -28,6 +28,10 @@
     <t id="43">Próg odprowadzania</t>
     <t id="44">Pozostawiany poziom</t>
     <t id="45">Minimalne zachowane pieniądze gracza</t>
+    <t id="46">Tag</t>
+    <t id="47">Budżet docelowy</t>
+    <t id="48">Dotacja</t>
+    <t id="49">Zezwalaj stacjom z tym tagiem na otrzymywanie kredytów, gdy ich saldo jest niższe od celu. Wymaga włączenia globalnego uzupełniania. Niedostępne przy celu równym zero, chyba że używany jest standardowy planowany budżet.</t>
 
     <t id="30">Dodaj do nazw stacji tagi jak [QT57] i ustaw budżet docelowy tagu.</t>
     <t id="31">Stacje z tagiem trzymają się celu; stacje bez tagu są ignorowane.</t>

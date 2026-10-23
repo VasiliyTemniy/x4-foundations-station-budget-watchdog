@@ -49,11 +49,17 @@ station-name tags and their target budgets, and to tune the watchdog:
 | Slider | Default | Meaning |
 | --- | --- | --- |
 | Check interval | 30 s | How often all stations are checked. |
-| Minimum transfer | 1 M Cr | Floor for any single grant or drain. |
-| Minimum kept player money | 20 M Cr | Wallet reserve top-ups never dip into. |
+| Minimum transfer | 1,000,000 Cr | Floor for any single grant or drain. |
+| Minimum kept player money | 20,000,000 Cr | Wallet reserve top-ups never dip into. |
 | Top-up fill level | 200 % | Balance a grant fills up to, in percent of target. |
 | Drain trigger level | 300 % | Balance above which surplus is reclaimed. |
 | Drain leave level | 150 % | Balance a drain leaves at the station. |
+
+Each tag has a **Top-up** checkbox; the global top-up switch overrides
+it without clearing its choice. A zero target disables top-ups and drains
+the account, with no drain-percentage changes needed. `Minimum transfer`
+still applies; set it to `0` to collect even tiny amounts. Transfers happen
+on the configured check interval.
 
 Default tags:
 
@@ -66,8 +72,13 @@ Default tags:
 
 The first configured tag found in a station's name wins. Untagged stations are
 ignored unless `Ignore tag system and handle all player stations` is enabled.
-In that mode every operational player station is handled and its target is the
-station's vanilla planned budget (`productionmoney`).
+In that mode every operational player station is handled using its automatic
+budget and the global switches; tag amounts and top-up choices are bypassed.
+With `Use vanilla station planned budget instead of tag-based` enabled on its
+own, tags still select stations and control their top-up permission, but the
+automatic budget replaces the configured amount. A configured zero does not
+disable the checkbox in that mode. The automatic budget includes production,
+trade wares, and a derived supply-order budget.
 
 To reproduce original HappyStation behavior, enable `Ignore tag system and
 handle all player stations`, keep `Top-up to fill target` enabled, disable

@@ -28,6 +28,10 @@
     <t id="43">Abschöpf-Schwelle</t>
     <t id="44">Verbleibendes Level</t>
     <t id="45">Mindestens verbleibendes Spielergeld</t>
+    <t id="46">Tag</t>
+    <t id="47">Zielbudget</t>
+    <t id="48">Zuschuss</t>
+    <t id="49">Stationen mit diesem Tag dürfen Credits erhalten, wenn ihr Kontostand unter dem Ziel liegt. Globales Auffüllen muss aktiviert sein. Bei einem Ziel von null nicht verfügbar, außer wenn das geplante Standardbudget verwendet wird.</t>
 
     <t id="30">Fügen Sie Stationsnamen Tags wie [QT57] hinzu und setzen Sie das Zielbudget.</t>
     <t id="31">Stationen mit Tag bleiben nahe am Ziel; Stationen ohne Tag werden ignoriert.</t>

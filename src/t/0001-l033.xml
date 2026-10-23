@@ -28,6 +28,10 @@
     <t id="43">Seuil de drainage</t>
     <t id="44">Niveau conservé</t>
     <t id="45">Argent minimum conservé du joueur</t>
+    <t id="46">Balise</t>
+    <t id="47">Budget cible</t>
+    <t id="48">Recharge</t>
+    <t id="49">Autoriser les stations portant cette balise à recevoir des crédits lorsque leur solde est inférieur à la cible. La recharge globale doit être activée. Indisponible pour une cible nulle, sauf si le budget planifié vanilla est utilisé.</t>
 
     <t id="30">Ajoutez une balise comme [QT57] au nom d'une station, puis fixez son budget cible.</t>
     <t id="31">Les stations balisées restent près de la cible; les autres sont ignorées.</t>

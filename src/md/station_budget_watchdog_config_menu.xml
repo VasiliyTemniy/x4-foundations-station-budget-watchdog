@@ -17,11 +17,23 @@
             table[$tag = '[AB40]', $target = 40000000Cr],
           ]"/>
         </do_if>
+        <!-- Old tags allow top-ups by default. A manual zero target is shown
+             unchecked in the menu, but its saved choice is kept. -->
+        <do_for_each name="$e" in="player.entity.$vas_sbw_targets">
+          <do_if value="(@$e.$topup_enabled + '') == 'null'">
+            <set_value name="$e.$topup_enabled" exact="true"/>
+          </do_if>
+        </do_for_each>
         <do_if value="not @player.entity.$vas_sbw_newtag">
           <set_value name="player.entity.$vas_sbw_newtag" exact="''"/>
         </do_if>
-        <do_if value="not @player.entity.$vas_sbw_newtargetm">
-          <set_value name="player.entity.$vas_sbw_newtargetm" exact="5"/>
+        <do_if value="(@player.entity.$vas_sbw_newtargetcr + '') == 'null'">
+          <!-- vas_sbw_newtargetm is million-based format of pre-110 versions.
+               Migrate once and remove the old value -->
+          <set_value name="player.entity.$vas_sbw_newtargetcr" exact="if (@player.entity.$vas_sbw_newtargetm + '') != 'null' then (player.entity.$vas_sbw_newtargetm * 1000000 + 0.5)i else 5000000"/>
+          <do_if value="(@player.entity.$vas_sbw_newtargetm + '') != 'null'">
+            <remove_value name="player.entity.$vas_sbw_newtargetm"/>
+          </do_if>
         </do_if>
         <do_if value="(@player.entity.$vas_sbw_topup_enabled + '') == 'null'">
           <set_value name="player.entity.$vas_sbw_topup_enabled" exact="true"/>
@@ -44,11 +56,21 @@
         <do_if value="(@player.entity.$vas_sbw_check_interval + '') == 'null'">
           <set_value name="player.entity.$vas_sbw_check_interval" exact="30"/>
         </do_if>
-        <do_if value="(@player.entity.$vas_sbw_min_transfer_m + '') == 'null'">
-          <set_value name="player.entity.$vas_sbw_min_transfer_m" exact="1"/>
+        <do_if value="(@player.entity.$vas_sbw_min_transfer_cr + '') == 'null'">
+          <!-- vas_sbw_min_transfer_m is million-based format of pre-110 versions.
+               Migrate once and remove the old value -->
+          <set_value name="player.entity.$vas_sbw_min_transfer_cr" exact="if (@player.entity.$vas_sbw_min_transfer_m + '') != 'null' then (player.entity.$vas_sbw_min_transfer_m * 1000000 + 0.5)i else 1000000"/>
+          <do_if value="(@player.entity.$vas_sbw_min_transfer_m + '') != 'null'">
+            <remove_value name="player.entity.$vas_sbw_min_transfer_m"/>
+          </do_if>
         </do_if>
-        <do_if value="(@player.entity.$vas_sbw_keep_player_m + '') == 'null'">
-          <set_value name="player.entity.$vas_sbw_keep_player_m" exact="20"/>
+        <do_if value="(@player.entity.$vas_sbw_keep_player_cr + '') == 'null'">
+          <!-- vas_sbw_keep_player_m is million-based format of pre-110 versions.
+               Migrate once and remove the old value -->
+          <set_value name="player.entity.$vas_sbw_keep_player_cr" exact="if (@player.entity.$vas_sbw_keep_player_m + '') != 'null' then (player.entity.$vas_sbw_keep_player_m * 1000000 + 0.5)i else 20000000"/>
+          <do_if value="(@player.entity.$vas_sbw_keep_player_m + '') != 'null'">
+            <remove_value name="player.entity.$vas_sbw_keep_player_m"/>
+          </do_if>
         </do_if>
         <do_if value="(@player.entity.$vas_sbw_grant_pct + '') == 'null'">
           <set_value name="player.entity.$vas_sbw_grant_pct" exact="200"/>
@@ -110,7 +132,7 @@
       <actions>
         <signal_cue_instantly cue="md.Simple_Menu_API.Register_Options_Menu" param="table[
           $id = 'vas_sbw_options_menu',
-          $columns = 4,
+          $columns = 5,
           $title = {202600608,10},
           $onOpen = BuildWatchdogMenu,
         ]"/>
@@ -119,7 +141,7 @@
     </cue>
 
     <!-- Populate the options menu: existing tag->target rows (each with Remove),
-         then a "new entry" row (tag editbox + target slider in millions + Add). -->
+         then a "new entry" row (tag editbox + target slider in credits + Add). -->
     <cue name="BuildWatchdogMenu" instantiate="true">
       <conditions>
         <event_cue_signalled/>
@@ -137,18 +159,26 @@
           $width = 'Helper.standardButtonHeight',
         ]"/>
 
+        <!-- Simple Menu resolves Helper constants, not arithmetic expressions.
+             Three standard button heights (25 each) leave room beside the checkbox. -->
+        <signal_cue_instantly cue="md.Simple_Menu_API.Call_Table_Method" param="table[
+          $method = 'setColWidth',
+          $col = 4,
+          $width = 75,
+        ]"/>
+
         <!-- Header text -->
         <!-- Overall mechanics description -->
         <signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[$selectable = false]"/>
         <signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
           $col = 1,
-          $colSpan = 4,
+          $colSpan = 5,
           $text = {202600608,30}
         ]"/>
         <signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[$selectable = false]"/>
         <signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
           $col = 1,
-          $colSpan = 4,
+          $colSpan = 5,
           $text = {202600608,31}
         ]"/>
 
@@ -156,7 +186,7 @@
         <signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[$selectable = false]"/>
         <signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
           $col = 1,
-          $colSpan = 4,
+          $colSpan = 5,
           $id = 'vas_sbw_header_spacer1',
           $text = '',
           $height = 10,
@@ -167,13 +197,13 @@
         <signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[$selectable = false]"/>
         <signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
           $col = 1,
-          $colSpan = 4,
+          $colSpan = 5,
           $text = {202600608,32}
         ]"/>
         <signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[$selectable = false]"/>
         <signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
           $col = 1,
-          $colSpan = 4,
+          $colSpan = 5,
           $text = {202600608,33}
         ]"/>
 
@@ -181,7 +211,7 @@
         <signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[$selectable = false]"/>
         <signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
           $col = 1,
-          $colSpan = 4,
+          $colSpan = 5,
           $id = 'vas_sbw_header_spacer2',
           $text = '',
           $height = 10,
@@ -192,13 +222,13 @@
         <signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[$selectable = false]"/>
         <signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
           $col = 1,
-          $colSpan = 4,
+          $colSpan = 5,
           $text = {202600608,34}
         ]"/>
         <signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[$selectable = false]"/>
         <signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
           $col = 1,
-          $colSpan = 4,
+          $colSpan = 5,
           $text = {202600608,35}
         ]"/>
 
@@ -206,7 +236,7 @@
         <signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[$selectable = false]"/>
         <signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
           $col = 1,
-          $colSpan = 4,
+          $colSpan = 5,
           $id = 'vas_sbw_newtag_spacer1',
           $text = '',
           $halign = 'left',
@@ -223,7 +253,7 @@
           $height = 'Helper.standardButtonHeight',
           $onClick = OnToggleChanged,
         ]"/>
-        <signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 2, $colSpan = 3, $text = {202600608,16}, $halign = 'left']"/>
+        <signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 2, $colSpan = 4, $text = {202600608,16}, $halign = 'left']"/>
 
         <!-- Drain enabled checkbox -->
         <signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[]"/>
@@ -236,7 +266,7 @@
           $height = 'Helper.standardButtonHeight',
           $onClick = OnToggleChanged,
         ]"/>
-        <signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 2, $colSpan = 3, $text = {202600608,17}, $halign = 'left']"/>
+        <signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 2, $colSpan = 4, $text = {202600608,17}, $halign = 'left']"/>
 
         <!-- Vanilla budget checkbox -->
         <signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[]"/>
@@ -250,7 +280,7 @@
           $height = 'Helper.standardButtonHeight',
           $onClick = OnUseVanillaBudgetChanged,
         ]"/>
-        <signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 2, $colSpan = 3, $text = {202600608,19}, $halign = 'left']"/>
+        <signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 2, $colSpan = 4, $text = {202600608,19}, $halign = 'left']"/>
 
         <!-- HappyStation-style all-stations checkbox -->
         <signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[]"/>
@@ -263,7 +293,7 @@
           $height = 'Helper.standardButtonHeight',
           $onClick = OnHandleAllStationsChanged,
         ]"/>
-        <signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 2, $colSpan = 3, $text = {202600608,25}, $halign = 'left']"/>
+        <signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 2, $colSpan = 4, $text = {202600608,25}, $halign = 'left']"/>
 
         <!-- Easter egg HappyStation texts checkbox -->
         <signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[]"/>
@@ -276,7 +306,7 @@
           $height = 'Helper.standardButtonHeight',
           $onClick = OnToggleChanged,
         ]"/>
-        <signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 2, $colSpan = 3, $text = {202600608,18}, $halign = 'left']"/>
+        <signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 2, $colSpan = 4, $text = {202600608,18}, $halign = 'left']"/>
 
         <!-- Debug logging checkbox -->
         <signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[]"/>
@@ -289,13 +319,13 @@
           $height = 'Helper.standardButtonHeight',
           $onClick = OnToggleChanged,
         ]"/>
-        <signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 2, $colSpan = 3, $text = {202600608,24}, $halign = 'left']"/>
+        <signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 2, $colSpan = 4, $text = {202600608,24}, $halign = 'left']"/>
 
         <!-- Spacer -->
         <signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[$selectable = false]"/>
         <signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
           $col = 1,
-          $colSpan = 4,
+          $colSpan = 5,
           $id = 'vas_sbw_tuning_spacer2',
           $text = '',
           $halign = 'left',
@@ -306,7 +336,7 @@
         <signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 2, $text = {202600608,40}, $halign = 'left']"/>
         <signal_cue_instantly cue="md.Simple_Menu_API.Make_Slider" param="table[
           $col = 3,
-          $colSpan = 2,
+          $colSpan = 3,
           $id = 'vas_sbw_check_interval',
           $echo = 'vas_sbw_check_interval',
           $min = 10,
@@ -322,15 +352,16 @@
         <signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 2, $text = {202600608,41}, $halign = 'left']"/>
         <signal_cue_instantly cue="md.Simple_Menu_API.Make_Slider" param="table[
           $col = 3,
-          $colSpan = 2,
-          $id = 'vas_sbw_min_transfer_m',
-          $echo = 'vas_sbw_min_transfer_m',
+          $colSpan = 3,
+          $id = 'vas_sbw_min_transfer_cr',
+          $echo = 'vas_sbw_min_transfer_cr',
           $min = 0,
-          $max = 10,
-          $step = 1,
+          $max = 10000000,
+          $step = 100000,
+          $accuracyOverride = 0,
           $height = 'Helper.slidercellMinHeight',
-          $start = player.entity.$vas_sbw_min_transfer_m,
-          $suffix = ' M Cr',
+          $start = player.entity.$vas_sbw_min_transfer_cr,
+          $suffix = ' Cr',
           $onSliderCellConfirm = OnTuningChanged,
         ]"/>
 
@@ -338,15 +369,16 @@
         <signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 2, $text = {202600608,45}, $halign = 'left']"/>
         <signal_cue_instantly cue="md.Simple_Menu_API.Make_Slider" param="table[
           $col = 3,
-          $colSpan = 2,
-          $id = 'vas_sbw_keep_player_m',
-          $echo = 'vas_sbw_keep_player_m',
+          $colSpan = 3,
+          $id = 'vas_sbw_keep_player_cr',
+          $echo = 'vas_sbw_keep_player_cr',
           $min = 0,
-          $max = 500,
-          $step = 5,
+          $max = 500000000,
+          $step = 100000,
+          $accuracyOverride = 0,
           $height = 'Helper.slidercellMinHeight',
-          $start = player.entity.$vas_sbw_keep_player_m,
-          $suffix = ' M Cr',
+          $start = player.entity.$vas_sbw_keep_player_cr,
+          $suffix = ' Cr',
           $onSliderCellConfirm = OnTuningChanged,
         ]"/>
 
@@ -354,7 +386,7 @@
         <signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 2, $text = {202600608,42}, $halign = 'left']"/>
         <signal_cue_instantly cue="md.Simple_Menu_API.Make_Slider" param="table[
           $col = 3,
-          $colSpan = 2,
+          $colSpan = 3,
           $id = 'vas_sbw_grant_pct',
           $echo = 'vas_sbw_grant_pct',
           $min = 100,
@@ -370,10 +402,10 @@
         <signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 2, $text = {202600608,43}, $halign = 'left']"/>
         <signal_cue_instantly cue="md.Simple_Menu_API.Make_Slider" param="table[
           $col = 3,
-          $colSpan = 2,
+          $colSpan = 3,
           $id = 'vas_sbw_drain_check_pct',
           $echo = 'vas_sbw_drain_check_pct',
-          $min = 150,
+          $min = 100,
           $max = 1000,
           $step = 25,
           $height = 'Helper.slidercellMinHeight',
@@ -386,7 +418,7 @@
         <signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 2, $text = {202600608,44}, $halign = 'left']"/>
         <signal_cue_instantly cue="md.Simple_Menu_API.Make_Slider" param="table[
           $col = 3,
-          $colSpan = 2,
+          $colSpan = 3,
           $id = 'vas_sbw_drain_leave_pct',
           $echo = 'vas_sbw_drain_leave_pct',
           $min = 100,
@@ -402,7 +434,7 @@
         <signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[$selectable = false]"/>
         <signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
           $col = 1,
-          $colSpan = 4,
+          $colSpan = 5,
           $id = 'vas_sbw_newtag_spacer3',
           $text = '',
           $halign = 'left',
@@ -414,13 +446,31 @@
         <set_value name="$tagsActive" exact="not player.entity.$vas_sbw_handle_all_stations"/>
         <set_value name="$tagTextColor" exact="if player.entity.$vas_sbw_handle_all_stations then 'Color.text_inactive' else 'Color.text_normal'"/>
 
+        <!-- Tags table headers -->
+        <signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[$selectable = false]"/>
+        <signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 2, $text = {202600608,46}, $color = $tagTextColor]"/>
+        <signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 3, $text = {202600608,47}, $color = $tagTextColor]"/>
+        <signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 4, $text = {202600608,48}, $color = $tagTextColor, $mouseOverText = {202600608,49}]"/>
+        <signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 5, $text = {202600608,12}, $color = $tagTextColor, $halign = 'center']"/>
+
         <!-- All the existing tags -->
         <do_for_each name="$e" in="player.entity.$vas_sbw_targets">
           <signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[]"/>
           <signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 2, $text = $e.$tag, $color = $tagTextColor]"/>
           <signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 3, $text = $e.$target.formatted.default + ' Cr', $color = $tagTextColor]"/>
-          <signal_cue_instantly cue="md.Simple_Menu_API.Make_Button" param="table[
+          <signal_cue_instantly cue="md.Simple_Menu_API.Make_CheckBox" param="table[
             $col = 4,
+            $id = 'vas_sbw_topup_' + $e.$tag,
+            $echo = $e.$tag,
+            $checked = $e.$topup_enabled and (player.entity.$vas_sbw_use_vanilla_budget or $e.$target gt 0),
+            $active = $tagsActive and player.entity.$vas_sbw_topup_enabled and (player.entity.$vas_sbw_use_vanilla_budget or $e.$target gt 0),
+            $width = 'Helper.standardButtonHeight',
+            $height = 'Helper.standardButtonHeight',
+            $mouseOverText = {202600608,49},
+            $onClick = OnTagTopupChanged,
+          ]"/>
+          <signal_cue_instantly cue="md.Simple_Menu_API.Make_Button" param="table[
+            $col = 5,
             $id = 'vas_sbw_rm_' + $e.$tag,
             $echo = $e.$tag,
             $text = table[$text = {202600608,12}, $halign = 'center'],
@@ -433,7 +483,7 @@
         <signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[$selectable = false]"/>
         <signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
           $col = 1,
-          $colSpan = 4,
+          $colSpan = 5,
           $id = 'vas_sbw_status',
           $text = $statusText,
           $color = $statusColor,
@@ -445,7 +495,7 @@
         <signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[]"/>
         <signal_cue_instantly cue="md.Simple_Menu_API.Make_EditBox" param="table[
           $col = 1,
-          $colSpan = 4,
+          $colSpan = 5,
           $id = 'vas_sbw_newtag',
           $height = 'Helper.standardButtonHeight',
           $defaultText = if player.entity.$vas_sbw_newtag != '' then player.entity.$vas_sbw_newtag else {202600608,13},
@@ -456,21 +506,22 @@
         <signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[]"/>
         <signal_cue_instantly cue="md.Simple_Menu_API.Make_Slider" param="table[
           $col = 1,
-          $colSpan = 4,
+          $colSpan = 5,
           $id = 'vas_sbw_newtarget',
-          $min = 1,
-          $max = 500,
-          $step = 1,
+          $min = 0,
+          $max = 500000000,
+          $step = 100000,
+          $accuracyOverride = 0,
           $height = 'Helper.slidercellMinHeight',
-          $start = player.entity.$vas_sbw_newtargetm,
-          $suffix = ' M Cr',
+          $start = player.entity.$vas_sbw_newtargetcr,
+          $suffix = ' Cr',
           $active = $tagsActive,
           $onSliderCellConfirm = OnNewTargetChanged,
         ]"/>
         <signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[]"/>
         <signal_cue_instantly cue="md.Simple_Menu_API.Make_Button" param="table[
           $col = 1,
-          $colSpan = 4,
+          $colSpan = 5,
           $id = 'vas_sbw_add',
           $text = table[$text = {202600608,15}, $halign = 'center'],
           $active = $tagsActive,
@@ -535,6 +586,26 @@
         <set_value name="$key" exact="@event.param.$echo"/>
         <do_if value="$key == 'vas_sbw_topup_enabled' or $key == 'vas_sbw_drain_enabled' or $key == 'vas_sbw_use_happy_station_texts' or $key == 'vas_sbw_debug_enabled'">
           <set_value name="player.entity.{'$' + $key}" exact="if event.param.$checked then true else false"/>
+          <do_if value="$key == 'vas_sbw_topup_enabled'">
+            <signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
+          </do_if>
+        </do_if>
+        <reset_cue cue="this"/>
+      </actions>
+    </cue>
+
+    <cue name="OnTagTopupChanged" instantiate="true">
+      <conditions>
+        <event_cue_signalled/>
+      </conditions>
+      <actions>
+        <do_if value="not player.entity.$vas_sbw_handle_all_stations and player.entity.$vas_sbw_topup_enabled">
+          <do_for_each name="$e" in="player.entity.$vas_sbw_targets">
+            <do_if value="$e.$tag == event.param.$echo and (player.entity.$vas_sbw_use_vanilla_budget or $e.$target gt 0)">
+              <set_value name="$e.$topup_enabled" exact="if event.param.$checked then true else false"/>
+              <break/>
+            </do_if>
+          </do_for_each>
         </do_if>
         <reset_cue cue="this"/>
       </actions>
@@ -547,6 +618,7 @@
       <actions>
         <do_if value="not @player.entity.$vas_sbw_handle_all_stations">
           <set_value name="player.entity.$vas_sbw_use_vanilla_budget" exact="if event.param.$checked then true else false"/>
+          <signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
         </do_if>
         <reset_cue cue="this"/>
       </actions>
@@ -564,16 +636,20 @@
       </actions>
     </cue>
 
-    <!-- One handler for all five tuning sliders; the echo names the entity var. -->
+    <!-- One handler for all tuning sliders; the echo names the entity var.
+         Money values are cast before they can enter a money expression. -->
     <cue name="OnTuningChanged" instantiate="true">
       <conditions>
         <event_cue_signalled/>
       </conditions>
       <actions>
         <set_value name="$key" exact="@event.param.$echo"/>
-        <do_if value="$key == 'vas_sbw_check_interval' or $key == 'vas_sbw_min_transfer_m' or $key == 'vas_sbw_keep_player_m' or $key == 'vas_sbw_grant_pct' or $key == 'vas_sbw_drain_check_pct' or $key == 'vas_sbw_drain_leave_pct'">
-          <set_value name="player.entity.{'$' + $key}" exact="event.param.$value"/>
+        <do_if value="$key == 'vas_sbw_min_transfer_cr' or $key == 'vas_sbw_keep_player_cr'">
+          <set_value name="player.entity.{'$' + $key}" exact="(event.param.$value)i"/>
         </do_if>
+        <do_elseif value="$key == 'vas_sbw_check_interval' or $key == 'vas_sbw_grant_pct' or $key == 'vas_sbw_drain_check_pct' or $key == 'vas_sbw_drain_leave_pct'">
+          <set_value name="player.entity.{'$' + $key}" exact="event.param.$value"/>
+        </do_elseif>
         <reset_cue cue="this"/>
       </actions>
     </cue>
@@ -598,7 +674,7 @@
         <event_cue_signalled/>
       </conditions>
       <actions>
-        <set_value name="player.entity.$vas_sbw_newtargetm" exact="event.param.$value"/>
+        <set_value name="player.entity.$vas_sbw_newtargetcr" exact="(event.param.$value)i"/>
         <reset_cue cue="this"/>
       </actions>
     </cue>
@@ -631,7 +707,8 @@
         <do_else>
           <append_to_list name="player.entity.$vas_sbw_targets" exact="table[
             $tag = $tag,
-            $target = player.entity.$vas_sbw_newtargetm * 1000000Cr,
+            $target = (player.entity.$vas_sbw_newtargetcr)i * 1Cr,
+            $topup_enabled = true,
           ]"/>
           <set_value name="player.entity.$vas_sbw_ignore_next_newtag_deactivate" exact="true"/>
           <set_value name="player.entity.$vas_sbw_newtag" exact="''"/>

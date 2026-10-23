@@ -38,12 +38,14 @@ Open Extension Options and use the Station Budget Watchdog menu to add or remove
 
 [list]
 [*][b]Check interval[/b] - default: 30 s. How often all stations are checked.[/*]
-[*][b]Minimum transfer[/b] - default: 1 M Cr. Floor for any single grant or drain.[/*]
-[*][b]Minimum kept player money[/b] - default: 20 M Cr. Wallet reserve top-ups never dip into.[/*]
+[*][b]Minimum transfer[/b] - default: 1,000,000 Cr. Floor for any single grant or drain.[/*]
+[*][b]Minimum kept player money[/b] - default: 20,000,000 Cr. Wallet reserve top-ups never dip into.[/*]
 [*][b]Top-up fill level[/b] - default: 200 %. Balance a grant fills up to, in percent of target.[/*]
 [*][b]Drain trigger level[/b] - default: 300 %. Balance above which surplus is reclaimed.[/*]
 [*][b]Drain leave level[/b] - default: 150 %. Balance a drain leaves at the station.[/*]
 [/list]
+
+Each tag has a [b]Top-up[/b] checkbox; the global top-up switch overrides it without clearing its choice. A zero target disables top-ups and drains the account, with no drain-percentage changes needed. [font=Courier New]Minimum transfer[/font] still applies; set it to [font=Courier New]0[/font] to collect even tiny amounts. Transfers happen on the configured check interval.
 
 Default tags:
 
@@ -54,7 +56,7 @@ Default tags:
 [*][font=Courier New][AB40][/font] - 40,000,000 Cr[/*]
 [/list]
 
-The first configured tag found in a station's name wins. Untagged stations are ignored unless [font=Courier New]Ignore tag system and handle all player stations[/font] is enabled. In that mode every operational player station is handled and its target is the station's vanilla planned budget ([font=Courier New]productionmoney[/font]).
+The first configured tag found in a station's name wins. Untagged stations are ignored unless [font=Courier New]Ignore tag system and handle all player stations[/font] is enabled. In that mode every operational player station is handled using its automatic budget and the global switches; tag amounts and top-up choices are bypassed. With [font=Courier New]Use vanilla station planned budget instead of tag-based[/font] enabled on its own, tags still select stations and control their top-up permission, but the automatic budget replaces the configured amount. A configured zero does not disable the checkbox in that mode. The automatic budget includes production, trade wares, and a derived supply-order budget.
 
 To reproduce original HappyStation behavior, enable [font=Courier New]Ignore tag system and handle all player stations[/font], keep [font=Courier New]Top-up to fill target[/font] enabled, disable [font=Courier New]Drain surplus[/font], and set both [font=Courier New]Minimum transfer[/font] and [font=Courier New]Minimum kept player money[/font] to [font=Courier New]0[/font].
 

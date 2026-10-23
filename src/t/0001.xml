@@ -31,6 +31,10 @@
     <t id="43">Drain trigger level</t>
     <t id="44">Drain leave level</t>
     <t id="45">Minimum kept player money</t>
+    <t id="46">Tag</t>
+    <t id="47">Target budget</t>
+    <t id="48">Top-up</t>
+    <t id="49">Allow stations with this tag to receive credits when below target. Requires global top-up to be enabled. Unavailable for a zero target unless using the vanilla planned budget.</t>
 
     <!-- Header -->
     <t id="30">Tag station names like [QT57], then set the target budget for that tag.</t>
@@ -48,7 +52,7 @@
     <t id="103">$STATION$ in $SECTOR$ just found $AMOUNT$ Cr under the sofa cushions of empire logistics. Joy protocols engaged.</t>
     <t id="104">A gentle rain of $AMOUNT$ Cr fell upon $STATION$ in $SECTOR$. Local accountants report suspicious levels of cheer.</t>
     <t id="105">$AMOUNT$ Cr arrived at $STATION$ in $SECTOR$. The station held a modest ribbon-cutting ceremony.</t>
-    <t id="106">$STATION$ in $SECTOR$ received $AMOUNT$ Cr. No autonomous decision-making was involved — the station is simply happy.</t>
+    <t id="106">$STATION$ in $SECTOR$ received $AMOUNT$ Cr. No autonomous decision-making was involved - the station is simply happy.</t>
     <t id="107">$STATION$ in $SECTOR$ received $AMOUNT$ Cr. A passing Teladi auditor classified the station's joy as "profitable."</t>
     <t id="108">$AMOUNT$ Cr were beamed into the accounts of $STATION$ in $SECTOR$. Even the dockworkers noticed the spring in the cranes.</t>
     <t id="109">Emergency funds of $AMOUNT$ Cr reached $STATION$ in $SECTOR$. The station assured everyone it wasn't worried in the first place.</t>
@@ -78,7 +82,7 @@
     <t id="209">$STATION$ in $SECTOR$ parted with $AMOUNT$ Cr. All station routines remain perfectly ordinary and non-sentient.</t>
     <t id="210">$AMOUNT$ Cr was reclaimed from $STATION$ in $SECTOR$. The station's satisfaction level held steady at acceptable.</t>
     <t id="211">$STATION$ in $SECTOR$ returned $AMOUNT$ Cr. A Paranid inspector noted the transaction was "graceful enough."</t>
-    <t id="212">$AMOUNT$ Cr left $STATION$ in $SECTOR$. The station hummed contentedly — in a perfectly mechanical way.</t>
+    <t id="212">$AMOUNT$ Cr left $STATION$ in $SECTOR$. The station hummed contentedly - in a perfectly mechanical way.</t>
     <t id="213">An Argon budgeting algorithm at $STATION$ in $SECTOR$ identified $AMOUNT$ Cr as surplus and returned it promptly.</t>
     <t id="214">$AMOUNT$ Cr was quietly rerouted from $STATION$ in $SECTOR$. The station didn't complain. It never does.</t>
     <t id="215">$STATION$ in $SECTOR$ returned $AMOUNT$ Cr after a long moment of what witnesses could only describe as contemplating. Stations do not contemplate. Moving on.</t>
